@@ -138,6 +138,12 @@
   --accent-ink-hover:#9e3606;
   --accent-soft:#fbf0e6; --accent-line:#eec9ac; --accent-deep:#7d3406;
   --radius:10px; --radius-lg:16px; --container:1180px;
+  --gutter:20px;               /* единственный жёлоб между колонками */
+  --step:32px;                 /* единственный шаг между блоками */
+  --pad:84px;                  /* единственное поле секции по вертикали */
+  --half:16px;                 /* половинный шаг, для мелких связок */
+  /* ширины по колонкам: 7 · 6 · 5 · 4 колонки при жёлобе 20 */
+  --w7:680px; --w6:580px; --w5:480px; --w4:380px;
   --header-h:72px;
   --shadow-sm:0 1px 2px rgba(28,22,16,.05), 0 6px 18px -10px rgba(28,22,16,.16);
   --shadow-md:0 2px 4px rgba(28,22,16,.05), 0 22px 46px -22px rgba(28,22,16,.28);
@@ -155,6 +161,10 @@ html{accent-color:var(--accent-ink)}
 a{color:var(--accent-ink);text-decoration:none}
 a:hover{color:var(--accent-ink-hover);text-decoration:underline}
 .wrap{width:min(100% - 32px,var(--container));margin-inline:auto}
+/* Сетка на 12 колонок. Ниже 900 px всё складывается в одну колонку —
+   на узком экране колонки только мешают. */
+.g12{display:grid;gap:var(--step) var(--gutter);grid-template-columns:1fr}
+@media (min-width:900px){.g12{grid-template-columns:repeat(12,minmax(0,1fr))}}
 section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из аудита */
 
 /* A-01: единый видимый фокус, ни одного outline:none без замены */
@@ -178,12 +188,14 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
 .ibox--dark{background:rgba(232,98,28,.14);border-color:rgba(232,98,28,.4);color:#ff8a4c}
 
 /* ── быстрая навигация: белая плашка, наезжающая на hero ── */
-.jump-wrap{position:relative;z-index:5;margin-top:-38px}
+.jump-wrap{position:relative;z-index:5}
 .jump{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
   box-shadow:var(--shadow-md);padding:14px;display:grid;gap:8px;
   grid-template-columns:repeat(2,minmax(0,1fr))}
+.jump-wrap{margin-top:calc(-1 * var(--step) - 4px)}
 @media (min-width:640px){.jump{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (min-width:960px){.jump{grid-template-columns:repeat(6,minmax(0,1fr));padding:16px}}
+@media (min-width:900px){.jump{grid-template-columns:repeat(6,minmax(0,1fr));
+  padding:var(--gutter);gap:var(--gutter)}}
 .jump a{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
   padding:14px 8px;border-radius:var(--radius);color:var(--text);font-size:13px;font-weight:600;
   line-height:1.25;transition:background .16s,color .16s}
@@ -273,7 +285,7 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
 .crumbs [aria-current]{color:var(--text);font-weight:600}
 
 /* ── hero ── */
-.hero{position:relative;color:#fff;padding:48px 0 78px;background:var(--darker);
+.hero{position:relative;color:#fff;padding:48px 0 76px;background:var(--darker);
   background-image:
     linear-gradient(96deg, rgba(16,13,11,.95) 0%, rgba(16,13,11,.88) 44%, rgba(16,13,11,.42) 100%),
     radial-gradient(circle at 76% 30%, rgba(232,98,28,.22), transparent 26%),
@@ -284,17 +296,18 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
     linear-gradient(180deg, rgba(16,13,11,.9) 0%, rgba(16,13,11,.94) 55%, rgba(16,13,11,.97) 100%),
     url('../../../img/evroshtaketnik-svai/hero-800.webp')}
 }
-@media (min-width:960px){.hero{padding:64px 0 96px;min-height:600px}}
-.hero-grid{display:grid;gap:32px}
-@media (min-width:960px){.hero-grid{grid-template-columns:1.06fr 400px;align-items:start;gap:48px}}
+@media (min-width:900px){.hero{padding:var(--pad) 0 calc(var(--pad) + 32px);min-height:600px}}
+
+@media (min-width:900px){.hero-grid > *:first-child{grid-column:span 7}
+  .hero-grid > *:last-child{grid-column:span 5}}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(232,98,28,.14);
   border:1px solid rgba(232,98,28,.45);color:#ffb184;border-radius:5px;
   padding:8px 16px;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(32px,5.1vw,54px);line-height:1.04;
   font-weight:800;margin:20px 0 20px;letter-spacing:-.032em}
 /* подзаголовок не спорит с заголовком: без полужирного, тише по цвету */
-.lead{font-size:18px;color:#d5cfc6;max-width:52ch;font-weight:400}
-.lead-more{margin-top:12px;font-size:15px;color:#a8a199;max-width:56ch;line-height:1.55}
+.lead{font-size:18px;color:#d5cfc6;max-width:var(--w6);font-weight:400}
+.lead-more{margin-top:var(--half);font-size:15px;color:#a8a199;max-width:var(--w6);line-height:1.55}
 .hero-facts{list-style:none;margin-top:28px;display:grid;gap:16px}
 @media (min-width:700px){.hero-facts{grid-template-columns:1fr 1fr;gap:16px 24px}}
 .hero-facts li{display:flex;gap:12px;align-items:flex-start;font-size:14px;
@@ -317,8 +330,8 @@ h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(32px,5.1vw,54px);line-he
 .price-mini .ic{width:19px;height:19px;color:var(--accent-ink)}
 
 /* ── общие секции ── */
-.section{padding:60px 0}
-@media (min-width:960px){.section{padding:84px 0}}
+.section{padding:56px 0}
+@media (min-width:900px){.section{padding:var(--pad) 0}}
 .section--white{background:var(--surface)}
 /* на белой секции карточка берёт тёплый тон, иначе она видна только
    по волосяной рамке — ровно та беда, что была в «Ограничениях» */
@@ -327,7 +340,7 @@ h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(32px,5.1vw,54px);line-he
 
 .section--white th{background:#eae3d8}
 .section--warm{background:linear-gradient(180deg,#f7f1e8,#f3ece2)}
-.section-head{max-width:70ch;margin-bottom:32px}
+.section-head{max-width:var(--w7);margin-bottom:var(--step)}
 /* надзаголовок с чёрточкой — как над секциями исходной главной */
 .kicker{display:inline-flex;align-items:center;gap:10px;margin-bottom:13px;
   color:var(--accent-ink);font-size:12px;font-weight:800;letter-spacing:.13em;
@@ -339,10 +352,11 @@ h2{font-family:Manrope,Inter,sans-serif;font-size:clamp(24px,3.2vw,34px);line-he
 h3{font-family:Manrope,Inter,sans-serif;font-size:19px;line-height:1.28;font-weight:700;
   letter-spacing:-.012em;margin-bottom:9px}
 .section-head p{margin-top:13px;color:var(--muted);font-size:16px}
-.prose p{max-width:74ch;color:var(--ink-2)}
+.prose p{max-width:var(--w7);color:var(--ink-2)}
 /* длинный текст + попутчик справа: на узком экране колонки складываются */
-.prose-grid{display:grid;gap:32px;align-items:start}
-@media (min-width:960px){.prose-grid{grid-template-columns:minmax(0,1fr) 316px}}
+@media (min-width:900px){.prose-grid{align-items:start}
+  .prose-grid > .prose{grid-column:span 8}
+  .prose-grid > .aside{grid-column:span 4}}
 .aside{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-lg);padding:24px}
 @media (min-width:960px){.aside{position:sticky;top:calc(var(--header-h) + 20px)}}
 .aside h3{font-size:16px;margin-bottom:14px}
@@ -365,11 +379,10 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:19px;line-height:1.28;font-wei
 @media (max-width:559px){.chunk-photo{grid-column:1}}
 
 /* ограничения: снимок задаёт тон разделу, карточки идут колонкой */
-.ogr-grid{display:grid;gap:24px}
 @media (min-width:900px){
-  .ogr-grid{grid-template-columns:300px minmax(0,1fr);gap:32px;align-items:stretch}
-  /* снимок тянется на всю высоту колонки: иначе под ним оставалась пустота */
-  .ogr-photo{height:100%}
+  .ogr-grid{align-items:stretch}
+  .ogr-grid > .ogr-photo{grid-column:span 3;height:100%}
+  .ogr-grid > .cards{grid-column:span 9}
   .ogr-photo img{height:100%}
 }
 .ogr-photo{position:relative;margin:0;border-radius:var(--radius-lg);overflow:hidden;
@@ -382,9 +395,9 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:19px;line-height:1.28;font-wei
 @media (max-width:559px){.chunk{grid-template-columns:1fr}.chunk .ibox{grid-row:auto;margin-bottom:12px}}
 
 /* плитки ключевых цифр перед таблицей */
-.figures{display:grid;gap:12px;margin-bottom:24px;
+.figures{display:grid;gap:12px;margin-bottom:var(--step);
   grid-template-columns:repeat(auto-fit,minmax(158px,1fr))}
-@media (min-width:700px){.figures{gap:16px}}
+@media (min-width:900px){.figures{gap:var(--gutter);grid-template-columns:repeat(4,minmax(0,1fr))}}
 .figure{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
   padding:16px;box-shadow:var(--shadow-sm);display:flex;gap:12px;align-items:flex-start}
 @media (min-width:700px){.figure{padding:20px;gap:16px}}
@@ -456,19 +469,19 @@ th,td{padding:13px 16px;text-align:left;border-top:1px solid var(--line);vertica
 th{width:52%;font-weight:600;color:var(--ink-2);background:#faf8f5}
 /* две колонки по семь строк: значения короткие, одна широкая таблица
    оставляла пустой всю правую половину */
-.spec-grid{display:grid;gap:18px}
-@media (min-width:860px){.spec-grid{grid-template-columns:1fr 1fr;gap:20px}}
+.spec-grid{display:grid;gap:var(--gutter)}
+@media (min-width:900px){.spec-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:559px){th{width:44%}}
 .spec-grid table{min-width:0}
-.spec-note{margin-top:14px;font-size:13px;color:var(--muted)}
+.spec-note{margin-top:var(--half);font-size:13px;color:var(--muted)}
 tbody tr:nth-child(even) td{background:#fdfcfa}
 tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 
 /* ── карточки ── */
-.cards{display:grid;gap:16px}
+.cards{display:grid;gap:var(--gutter)}
 .cards--top{align-items:start}
 @media (min-width:700px){.cards--2{grid-template-columns:1fr 1fr}.cards--4{grid-template-columns:repeat(2,1fr)}}
-@media (min-width:1000px){.cards--4{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:900px){.cards--4{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
   padding:24px;box-shadow:var(--shadow-sm)}
 .card p{color:var(--muted);font-size:14px;margin-top:6px}
@@ -476,9 +489,9 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 .card--photo{padding:0;overflow:hidden}
 .card-body{padding:16px}
 .card-body h3{font-size:15px}
-.obj-more{margin-top:16px;font-size:14px}
+.obj-more{margin-top:var(--half);font-size:14px}
 /* крупная карточка объекта: текст и параметры, иначе колонка пустует */
-.obj-text{color:var(--muted);font-size:15px;margin-top:12px;max-width:44ch}
+.obj-text{color:var(--muted);font-size:15px;margin-top:12px;max-width:var(--w4)}
 .obj-spec{list-style:none;display:grid;gap:10px;margin:20px 0 0}
 .obj-spec li{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--text);font-weight:600}
 .obj-spec .ic{width:18px;height:18px;color:var(--accent-ink)}
@@ -508,34 +521,34 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 .aside .diag{margin-bottom:18px;background:var(--surface)}
 .sister:hover .arr{transform:translateX(4px)}
 .sister p{color:var(--muted);font-size:14px;margin-top:8px}
-.mother{margin-top:20px;background:var(--accent-soft);border:1px solid var(--accent-line);
+.mother{margin-top:var(--step);background:var(--accent-soft);border:1px solid var(--accent-line);
   border-radius:var(--radius-lg);padding:24px 26px;display:flex;gap:16px;align-items:center;
   flex-wrap:wrap;justify-content:space-between}
-.mother p{font-size:15px;color:var(--accent-deep);max-width:64ch}
+.mother p{font-size:15px;color:var(--accent-deep);max-width:var(--w6)}
 
 /* ── Q&A ── */
 .qa{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);
   overflow:hidden;box-shadow:var(--shadow-sm);transition:border-color .16s}
 .qa:hover{border-color:#dcd5cb}
 .qa[open]{border-color:var(--accent-line)}
-.qa+.qa{margin-top:12px}
+.qa+.qa{margin-top:var(--half)}
 .qa summary{list-style:none;cursor:pointer;padding:16px 20px;font-weight:600;font-size:15px;
   display:flex;justify-content:space-between;gap:16px;align-items:center}
 .qa summary::-webkit-details-marker{display:none}
 .qa summary::after{content:"+";font-size:22px;color:var(--accent-ink);font-weight:400;line-height:1;flex:0 0 auto}
 .qa[open] summary::after{content:"−"}
-.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15px;max-width:80ch}
+.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15px;max-width:var(--w7)}
 
 /* ── широкая полоса с фотографией: разбивает череду светлых секций ── */
-.band{position:relative;color:#fff;padding:72px 0;overflow:hidden;
+.band{position:relative;color:#fff;padding:56px 0;overflow:hidden;
   background:var(--darker) center/cover no-repeat;
   background-image:
     linear-gradient(100deg, rgba(16,13,11,.94) 0%, rgba(16,13,11,.86) 46%, rgba(16,13,11,.5) 100%),
     var(--band-img)}
-@media (min-width:960px){.band{padding:92px 0}}
-.band-inner{max-width:640px}
+@media (min-width:900px){.band{padding:var(--pad) 0}}
+.band-inner{max-width:var(--w7)}
 .band h2{font-size:clamp(25px,3.4vw,36px);margin-bottom:14px}
-.band p{color:#cfc9c1;font-size:16px;max-width:56ch}
+.band p{color:#cfc9c1;font-size:16px;max-width:var(--w6)}
 .band .kicker{color:#ff8a4c}
 .band .kicker::before{background:#ff8a4c}
 .band-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px;align-items:center}
@@ -545,11 +558,11 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 .band-phone .ic{width:20px;height:20px}
 
 /* ── отзывы: коллаж, высота карточек по содержимому ── */
-.rating-strip{width:min(100%,400px);height:auto;margin-bottom:28px}
-.rev-collage{columns:3;column-gap:16px}
+.rating-strip{width:min(100%,var(--w4));height:auto;margin-bottom:var(--step)}
+.rev-collage{columns:3;column-gap:var(--gutter)}
 @media (max-width:1019px){.rev-collage{columns:2}}
 @media (max-width:639px){.rev-collage{columns:1}}
-.rev{break-inside:avoid;margin:0 0 18px;background:var(--surface);
+.rev{break-inside:avoid;margin:0 0 var(--gutter);background:var(--surface);
   border:1px solid var(--line);border-radius:var(--radius-lg);padding:16px;
   box-shadow:var(--shadow-sm)}
 .rev .src{display:block;font-size:12px;color:var(--muted);font-weight:800;
@@ -576,7 +589,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 @media (min-width:820px){.footer-grid{grid-template-columns:1.3fr 1fr 1fr}}
 .footer-rating{margin-top:20px;background:var(--surface);border-radius:var(--radius);
   padding:12px 14px 10px;display:inline-block;box-shadow:0 10px 30px -18px rgba(0,0,0,.9)}
-.footer-rating img{width:100%;max-width:270px;height:auto}
+.footer-rating img{width:100%;max-width:250px;height:auto}
 .footer-rating span{display:block;font-size:11px;color:var(--muted);margin-top:8px;
   letter-spacing:.06em;text-transform:uppercase;font-weight:800;text-align:center}
 .site-footer h2{font-size:12px;font-family:Inter,sans-serif;font-weight:800;color:#fff;
@@ -642,7 +655,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 
 <!-- 2–4. H1 · вводный абзац · hero: фото + факты + цена «от» + CTA -->
 <div class="hero">
-  <div class="wrap hero-grid">
+  <div class="wrap hero-grid g12">
     <div>
       <span class="eyebrow">Своё производство · Москва и МО</span>
       <h1>Забор из евроштакетника <span class="hero-key">на винтовых сваях</span></h1>
@@ -769,7 +782,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
       <span class="kicker">Устройство</span>
       <h2 id="h-ustroystvo">Как устроен забор из евроштакетника на винтовых сваях</h2>
     </div>
-    <div class="prose-grid">
+    <div class="prose-grid g12">
     <div class="prose">
 
       <div class="chunk">
@@ -892,7 +905,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
       <h2 id="h-ogr">Технические нюансы и ограничения</h2>
       <p>Честнее сказать заранее, чем обнаружить на монтаже.</p>
     </div>
-    <div class="ogr-grid">
+    <div class="ogr-grid g12">
       <figure class="ogr-photo">
         <img src="../../../img/oformlenie/shcheben-900.webp"
              srcset="../../../img/oformlenie/shcheben-600.webp 600w, ../../../img/oformlenie/shcheben-900.webp 900w"
