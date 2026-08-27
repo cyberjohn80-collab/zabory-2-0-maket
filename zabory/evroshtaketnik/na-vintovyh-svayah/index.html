@@ -146,7 +146,8 @@
   --radius:10px; --radius-lg:16px; --container:1180px;
   --gutter:20px;               /* единственный жёлоб между колонками */
   --step:32px;                 /* единственный шаг между блоками */
-  --pad:160px;                 /* единственное поле секции по вертикали */
+  --pad:100px;                 /* поле секции: было 160 — воздуха выходило больше,
+                                  чем содержимого */
   --half:16px;                 /* половинный шаг, для мелких связок */
   /* ширины по колонкам считаются из контейнера: вписанные числом,
      они разъезжаются при первой же смене ширины контейнера */
@@ -185,14 +186,14 @@ a:hover{color:var(--accent-ink-hover);text-decoration:underline}
    текста поднимается на верхних ступенях: 16 px на экране в 3840 px
    читается как петит. */
 @media (min-width:1600px){
-  :root{--container:1320px;--gutter:22px;--pad:190px;--step:36px}
+  :root{--container:1320px;--gutter:22px;--pad:116px;--step:36px}
 }
 @media (min-width:2100px){
-  :root{--container:1500px;--gutter:24px;--pad:220px;--step:40px}
+  :root{--container:1500px;--gutter:24px;--pad:128px;--step:40px}
   body{font-size:17px}
 }
 @media (min-width:2800px){
-  :root{--container:1720px;--gutter:28px;--pad:260px;--step:46px}
+  :root{--container:1720px;--gutter:28px;--pad:140px;--step:46px}
   body{font-size:18.5px}
 }
 /* Во всю ширину экрана, как у Longbow и Polestar.
@@ -276,12 +277,16 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
 @media (min-width:900px){
   #raboty .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
   #raboty .card:first-child{grid-column:1 / -1;flex-direction:row;align-items:stretch}
-  #raboty .card:first-child .photo-wrap{flex:1 1 58%;min-width:0}
-  #raboty .card:first-child .card-photo{height:100%;aspect-ratio:auto;min-height:300px}
-  #raboty .card:first-child > div:last-child{flex:1 1 42%;justify-content:center;padding:32px 34px}
+  /* Высоту ряда задаёт снимок в своей пропорции — 667 px, а текста
+     в правой половине на 200. Оттого под ним белое поле. Высота ряда
+     задана явно, снимок обрезается, текст стоит по центру. */
+  #raboty .card:first-child .photo-wrap{flex:1 1 58%;min-width:0;height:430px}
+  #raboty .card:first-child .card-photo{height:100%;width:100%;aspect-ratio:auto;
+    object-fit:cover;min-height:0}
+  #raboty .card:first-child > div:last-child{flex:1 1 42%;padding:32px 34px;
+    display:flex;flex-direction:column;justify-content:center}
   #raboty .card:first-child h3{font-size:24px;letter-spacing:-.02em}
   #raboty .card:first-child p{font-size:15px;margin-top:10px!important;padding-top:0}
-  #raboty .card:first-child > div:last-child{display:block}
   #raboty .card:first-child .photo-tag{left:16px;bottom:16px;font-size:12px;padding:6px 14px}
 }
 .photo-wrap{position:relative;overflow:hidden;line-height:0}
@@ -347,11 +352,15 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
     radial-gradient(circle at 76% 30%, rgba(232,98,28,.22), transparent 26%),
     url('../../../img/evroshtaketnik-svai/hero-1800.webp')}
 }
-@media (min-width:900px){.hero{padding:var(--pad) 0 0;min-height:min(100svh,1040px);
+@media (min-width:900px){.hero{padding:var(--pad) 0 0;min-height:min(86svh,820px);
   display:grid;align-content:space-between}}
 
-@media (min-width:900px){.hero-grid > *:first-child{grid-column:span 7}
-  .hero-grid > *:last-child{grid-column:span 5}}
+/* колонка сетки не должна распирать обёртку своим содержимым */
+.hero-grid > *{min-width:0}
+@media (min-width:900px){.hero-grid{align-items:end}
+  .hero-grid > *:first-child{grid-column:span 7}
+  /* карточка прижата низом к низу текста: иначе висит в пустоте */
+  .hero-grid > *:last-child{grid-column:span 5;align-self:end}}
 .eyebrow{display:inline-flex;align-items:center;gap:10px;background:none;
   border:1px solid rgba(232,98,28,.5);color:#ffb184;border-radius:0;
   padding:8px 14px;font-family:var(--mono);font-size:11px;font-weight:500;
@@ -365,7 +374,13 @@ h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(38px,6vw,84px);line-heig
 .lead{font-size:20px;color:#d5cfc6;max-width:var(--w6);font-weight:400;line-height:1.5}
 /* вводный абзац: крупно и спокойно, как открывающее заявление.
    Имя .intro занято абзацем в форме — отсюда было 112 px дыр. */
-.opening{padding-block:calc(var(--pad) * .7)}
+.opening{padding-block:calc(var(--pad) * .8)}
+/* На широком экране одна колонка в 68 знаков занимает половину полосы,
+   а вторая половина пустует. Разбиваем на две — ширина занята,
+   а строка остаётся удобной. */
+@media (min-width:1100px){
+  .opening-text{columns:2;column-gap:56px;max-width:none}
+}
 .opening-text{font-size:clamp(19px,2.1vw,26px);line-height:1.45;color:var(--text);
   max-width:20ch;max-width:920px;letter-spacing:-.012em;font-weight:400}
 .lead-more{margin-top:var(--half);font-size:15px;color:#a8a199;max-width:var(--w6);line-height:1.55}
@@ -431,6 +446,7 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:20px;line-height:1.22;font-wei
   .prose-grid > .prose{grid-column:span 8}
   .prose-grid > .aside{grid-column:span 4}}
 .aside{background:var(--bg);border:0;border-radius:var(--radius-lg);padding:28px}
+@media (min-width:900px){.aside{position:sticky;top:96px}}
 @media (min-width:960px){.aside{position:sticky;top:calc(var(--header-h) + 20px)}}
 .aside h3{font-size:16px;margin-bottom:14px}
 .aside ul{list-style:none;display:grid;gap:12px;margin-bottom:18px}
@@ -445,16 +461,14 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:20px;line-height:1.22;font-wei
 .chunk:first-of-type{border-top:0;padding-top:0;margin-top:0}
 .chunk .ibox{grid-row:span 2;align-self:start;margin-top:3px}
 /* иллюстрация внутри чанка: вторая колонка, чтобы не ломать сетку */
-.chunk-photo{grid-column:2;margin-top:18px}
-.chunk-photo img{max-height:280px;object-fit:cover}
-/* вертикальный кадр держим узким: он поясняет абзац, а не заменяет его */
-.chunk-photo--uzkiy{max-width:272px}
-.chunk-photo--uzkiy img{max-height:none}
+/* Все снимки раздела одной ширины и одного соотношения. Раньше один
+   был портретом в 272 px, другие пейзажем в 740 — читалось разнобоем. */
+.chunk-photo,.chunk-photo--uzkiy{grid-column:2;margin-top:18px;max-width:560px}
+.chunk-photo img{width:100%;aspect-ratio:3/2;object-fit:cover;max-height:none}
 
 /* диптих под таблицей: материал и контроль материала */
 .diptih{margin-top:var(--step);gap:var(--gutter)}
-@media (min-width:900px){.diptih > figure:first-child{grid-column:span 6}
-  .diptih > figure:last-child{grid-column:span 6}}
+@media (min-width:900px){.diptih > figure{grid-column:span 7}}
 .diptih figure{margin:0}
 .diptih img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;
   border-radius:var(--radius);display:block}
@@ -579,7 +593,9 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 .card--photo{padding:0;overflow:hidden}
 .card-body{padding:16px}
 .card-body h3{font-size:15px}
-.obj-more{margin-top:var(--half);font-size:14px}
+/* стояла под первой плиткой и читалась как её подпись */
+.obj-more{margin-top:var(--step);font-size:14px;text-align:center;
+  padding-top:var(--step);border-top:1px solid var(--line)}
 /* крупная карточка объекта: текст и параметры, иначе колонка пустует */
 .obj-text{color:var(--muted);font-size:15px;margin-top:12px;max-width:var(--w4)}
 .obj-spec{list-style:none;display:grid;gap:10px;margin:20px 0 0}
@@ -648,13 +664,21 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 
 /* ── отзывы: коллаж, высота карточек по содержимому ── */
 .rating-strip{width:min(100%,var(--w4));height:auto;margin-bottom:var(--step)}
-.rev-collage{columns:3;column-gap:var(--gutter)}
-@media (max-width:1019px){.rev-collage{columns:2}}
-@media (max-width:639px){.rev-collage{columns:1}}
-.rev{break-inside:avoid;margin:0 0 var(--gutter);background:var(--surface);
-  border:0;border-radius:var(--radius-lg);padding:16px}
+/* Был многоколоночный коллаж `columns:3`. Он по своей природе даёт
+   рваный низ: колонки заполняются по очереди и кончаются где придётся.
+   Сетка равной высоты, снимки обрезаны по общей высоте от верха. */
+/* карточки не растягиваем: растянутая до высокой соседки пустует
+   внутри, и это заметнее, чем неровный низ ряда */
+.rev-collage{display:grid;gap:var(--gutter);align-items:start;
+  grid-template-columns:1fr}
+@media (min-width:760px){.rev-collage{grid-template-columns:repeat(2,1fr)}}
+.rev{margin:0;background:#fff;border:1px solid var(--line);
+  border-radius:var(--radius-lg);padding:16px;display:flex;flex-direction:column}
 .rev .src{display:block;font-size:12px;color:var(--muted);font-weight:800;
   letter-spacing:.08em;text-transform:uppercase;margin-bottom:11px}
+/* Общая высота с обрезкой резала текст по бокам: скриншоты разных
+   площадок к одной пропорции не приводятся. Ровняем карточки, а не
+   снимки — карточка одного цвета, и разница уходит в её поле. */
 .rev-shot{width:100%;height:auto;border:1px solid var(--line);border-radius:8px}
 
 /* вопросы одним блоком в две колонки по темам */
@@ -908,9 +932,9 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
         грунт. Бетон не заливают — значит, нет и риска, что он схватится неравномерно.
         Столбы, лаги и штакетник ставят тем же выездом или на следующий день.</p>
         <figure class="chunk-photo chunk-photo--uzkiy">
-          <img src="../../../img/evroshtaketnik-svai/svai-560.webp"
-               srcset="../../../img/evroshtaketnik-svai/svai-560.webp 560w, ../../../img/evroshtaketnik-svai/svai-840.webp 840w"
-               sizes="272px" width="560" height="747"
+          <img src="../../../img/evroshtaketnik-svai/svai-shir-1200.webp"
+               srcset="../../../img/evroshtaketnik-svai/svai-shir-600.webp 600w, ../../../img/evroshtaketnik-svai/svai-shir-1200.webp 1200w"
+               sizes="(min-width:960px) 46vw, 100vw" width="1200" height="800"
                loading="lazy" decoding="async"
                alt="Партия винтовых свай с лопастями на складе цеха"/>
           <figcaption>Лопасть опирается на неразработанный грунт — она и держит нагрузку.</figcaption>
@@ -922,6 +946,14 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
         <p>Глухой забор той же высоты работает как парус. У евроштакетника полотно
         продувается, и опора нагружена мягче — требования к заглублению ниже. Типоразмер
         под участок: <span class="stub" title="ЗАГЛУШКА — типоразмер свай не подтверждён">Ø 76 мм, длина 2500 мм, стенка 3,5 мм</span>.</p>
+        <figure class="chunk-photo">
+          <img src="../../../img/evroshtaketnik-svai/profil-1200.webp"
+               srcset="../../../img/evroshtaketnik-svai/profil-600.webp 600w, ../../../img/evroshtaketnik-svai/profil-1200.webp 1200w"
+               sizes="(min-width:960px) 46vw, 100vw" width="1200" height="800"
+               loading="lazy" decoding="async"
+               alt="Крупный план профиля штакетины и зазора между штакетинами"/>
+          <figcaption>Полотно продувается: именно зазор и разгружает опору.</figcaption>
+        </figure>
       </div>
 
       <div class="chunk">
@@ -1021,14 +1053,6 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
     </div>
     <div class="diptih g12">
       <figure>
-        <img src="../../../img/evroshtaketnik-svai/profil-1200.webp"
-             srcset="../../../img/evroshtaketnik-svai/profil-600.webp 600w, ../../../img/evroshtaketnik-svai/profil-1200.webp 1200w"
-             sizes="(min-width:900px) 46vw, 100vw" width="1200" height="800"
-             loading="lazy" decoding="async"
-             alt="Крупный план профиля штакетины и зазора между штакетинами"/>
-        <figcaption><span class="dp-no">М-01</span> Профиль штакетины и зазор полотна</figcaption>
-      </figure>
-      <figure>
         <img src="../../../img/evroshtaketnik-svai/zamer-1200.webp"
              srcset="../../../img/evroshtaketnik-svai/zamer-600.webp 600w, ../../../img/evroshtaketnik-svai/zamer-1200.webp 1200w"
              sizes="(min-width:900px) 46vw, 100vw" width="1200" height="800"
@@ -1093,6 +1117,8 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
       <div class="a">Между штакетинами есть зазор, поэтому полотно продувается и ветровая нагрузка на опору заметно ниже, чем у глухого забора той же высоты. Опора работает в более лёгком режиме, а значит требования к её заглублению мягче.</div></details>
         <details class="qa"><summary>Что будет с забором на участке с уклоном?</summary>
       <div class="a">Свая закручивается на разную глубину, поэтому перепад отыгрывается опорами, а не подсыпкой и не ступенчатым бетонным основанием. Полотно ведут либо уступами по рельефу, либо по единой линии верха — вариант выбирают на замере.</div></details>
+        <details class="qa"><summary>Можно ли огородить только часть участка?</summary>
+        <div class="a">Да. Считается любая комбинация сторон — только фасад, фасад с одной боковой, любая часть периметра. Остальные стороны можно доделать позже: опоры и полотно те же, стык будет незаметен.</div></details>
       </div>
       <div>
         <h3 class="qa-group">О заказе и оплате</h3>
@@ -1106,8 +1132,6 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
         <div class="a">Гарантия — 2 года на материалы и монтаж. Условия гарантии фиксируются в договоре.</div></details>
         <details class="qa"><summary>Нужно ли моё присутствие на замере?</summary>
         <div class="a">Желательно: на месте решаются вопросы, которые по телефону не решить — где будут ворота и калитка, как вести полотно по уклону, где проходят коммуникации. Если приехать не получается, работаем по вашим отметкам и согласуем схему до начала работ.</div></details>
-        <details class="qa"><summary>Можно ли огородить только часть участка?</summary>
-        <div class="a">Да. Считается любая комбинация сторон — только фасад, фасад с одной боковой, любая часть периметра. Остальные стороны можно доделать позже: опоры и полотно те же, стык будет незаметен.</div></details>
       </div>
     </div>
   </div>
