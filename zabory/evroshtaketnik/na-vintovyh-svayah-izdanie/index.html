@@ -237,7 +237,7 @@ p{text-wrap:pretty}
 @media (min-width:1000px){.hero{min-height:min(92svh,940px);display:grid;
   align-content:end;padding:120px 0 44px}}
 .hero-grid{display:grid;gap:36px var(--gutter)}
-@media (min-width:1000px){.hero-grid.g12{grid-template-columns:repeat(12,minmax(0,1fr));
+@media (min-width:900px){.hero-grid.g12{grid-template-columns:repeat(12,minmax(0,1fr));
   align-items:end}
   .hero-grid > *:first-child{grid-column:span 8}
   .hero-grid > aside{grid-column:span 4 / -1;padding-bottom:8px}}
@@ -279,13 +279,25 @@ h1{font-size:var(--t-display);margin-bottom:22px;letter-spacing:-.03em;
 .jump .ic{width:14px;height:14px;color:#8d8474;flex:none}
 .jump a:hover .ic{color:var(--accent)}
 
+
+/* На 320–400 px правый блок шапки (телефон + кнопка) шире самой строки.
+   Телефон остаётся ссылкой в подвале и в плавающей кнопке. */
+@media (max-width:440px){
+  .header-phone,.header-hours{display:none}
+  .header-right{gap:10px}
+  .logo-img{width:92px}
+}
+@media (max-width:479px){
+  .calc-choice{font-size:10px;letter-spacing:.06em}
+  .calc-locked{gap:6px}
+}
+
 /* ── КНОПКИ: тонкая антиква, подчёркнутая линией ──────────────────── */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
   font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:.01em;
   padding:15px 28px;background:var(--accent-2);color:#fff;border:0;cursor:pointer;
   transition:background .16s}
 .btn:hover{background:#712708;color:#fff;text-decoration:none}
-.btn:not(.btn--block){min-width:264px}
 .btn--lg{padding:17px 32px;font-size:15px}
 .btn--block{display:flex;width:100%}
 .cta-short{display:none}
@@ -332,15 +344,21 @@ input[type=range]{width:100%;accent-color:var(--accent-2)}
 
 /* ── УСТРОЙСТВО: колонка статьи и фотографии на полях ─────────────── */
 .prose-grid{display:grid;gap:56px var(--gutter)}
-@media (min-width:1000px){.prose-grid.g12{grid-template-columns:minmax(0,1fr) 320px;
+@media (min-width:900px){.prose-grid.g12{grid-template-columns:minmax(0,1fr) 320px;
   align-items:start}}
 .chunk{margin-bottom:44px}
 .chunk h3{font-size:var(--t-sub);margin-bottom:12px;line-height:1.14}
 .chunk p{color:var(--ink-2);max-width:var(--measure)}
 .ibox{display:none}
-/* фотография выходит за колонку текста — приём разворота */
+/* Фотография выходит за колонку текста — приём разворота. Наружу,
+   в отступ содержания, а не вправо: справа стоит врезка, и прежний
+   вынос на 90 px налезал на неё на 58 px. */
 .chunk-photo{margin:26px 0 0}
-@media (min-width:1000px){.chunk-photo{width:calc(100% + 90px)}}
+@media (min-width:1200px){
+  .chunk-photo{margin-left:-104px;width:calc(100% + 104px)}
+  /* вынос ровно на отступ содержания: левый край снимка
+     совпадает с краем обёртки, дальше не уходит */
+}
 .chunk-photo img{width:100%;aspect-ratio:16/9;object-fit:cover}
 .chunk-photo--uzkiy img{aspect-ratio:16/9}
 .chunk-photo figcaption{margin-top:11px;font-family:var(--serif);font-style:italic;
@@ -394,7 +412,7 @@ td{font-family:var(--sans);font-size:15px;line-height:1.5}
 
 /* ── ОГРАНИЧЕНИЯ: фотография во всю высоту слева ──────────────────── */
 .ogr-grid{display:grid;gap:var(--step) var(--gutter)}
-@media (min-width:1000px){.ogr-grid.g12{grid-template-columns:380px minmax(0,1fr);
+@media (min-width:900px){.ogr-grid.g12{grid-template-columns:380px minmax(0,1fr);
   align-items:stretch}}
 .ogr-photo{margin:0;position:relative;overflow:hidden}
 .ogr-photo img{width:100%;height:100%;min-height:300px;object-fit:cover}
@@ -507,7 +525,8 @@ td{font-family:var(--sans);font-size:15px;line-height:1.5}
 .band-phone:hover{background:rgba(255,255,255,.1);color:#fff;text-decoration:none}
 
 /* ── ОТЗЫВЫ ───────────────────────────────────────────────────────── */
-.rating-strip{display:block;width:min(100%,400px);height:auto;margin-bottom:40px}
+.rating-strip{display:block;width:min(100%,380px);height:auto;margin-bottom:40px}
+.footer-rating .rating-strip{margin-bottom:0}
 .rev-collage{display:grid;gap:var(--gutter);align-items:start}
 @media (min-width:760px){.rev-collage{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:1180px){.rev-collage{grid-template-columns:repeat(4,1fr)}}
@@ -518,7 +537,7 @@ td{font-family:var(--sans);font-size:15px;line-height:1.5}
 
 /* ── ЗАЯВКА ───────────────────────────────────────────────────────── */
 .zay-grid{display:grid;gap:44px var(--gutter)}
-@media (min-width:1000px){.zay-grid.g12{grid-template-columns:minmax(0,1fr) 430px;
+@media (min-width:900px){.zay-grid.g12{grid-template-columns:minmax(0,1fr) 430px;
   align-items:start}}
 .zay-say h2{font-family:var(--serif);font-size:var(--t-head)}
 .zay-text{margin-top:20px;font-family:var(--serif);font-size:18px;
@@ -569,10 +588,40 @@ input:focus{border-color:var(--ink);outline:none}
   letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .rise{opacity:1;transform:none}
 .g12{display:grid;gap:var(--step) var(--gutter);grid-template-columns:1fr}
-@media (min-width:900px){.g12{grid-template-columns:repeat(12,minmax(0,1fr))}}
+/* Утилита на двенадцать колонок НЕ применяется к элементам со своей
+   сеткой: иначе она перебивает их в щели между порогами и колонки
+   схлопываются. Так и было — карточка цены в 54 px при 920 px окна. */
+@media (min-width:900px){
+  .g12:not(.hero-grid):not(.prose-grid):not(.ogr-grid):not(.zay-grid):not(.diptih)
+    {grid-template-columns:repeat(12,minmax(0,1fr))}
+}
 
 .section-head p,.chunk p,.card p,.sister p,.mother p,.spec-note,.qa p,
 .obj-text,.zay-text,.band p,figcaption,.site-footer p,.note{max-width:min(100%,66ch)}
+
+/* ── Правила, которых не хватало ─────────────────────────────────────
+   `height:auto` для всех картинок: у плашки рейтингов в подвале нет
+   класса, и без этого она сжималась с 425 px до 234 при нетронутой
+   высоте 127 — снимок раздавлен по горизонтали. */
+img{height:auto}
+.footer-rating img{width:100%;max-width:250px}
+.footer-rating span{display:block;font-size:11px;margin-top:8px;opacity:.72}
+
+/* Наименьшая ширина кнопки не должна быть больше места под неё */
+.btn{max-width:100%}
+.btn:not(.btn--block){min-width:min(266px,100%)}
+
+/* Колонка сетки по умолчанию не сжимается уже своего содержимого
+   и растягивает обёртку. Разрешаем сжиматься. */
+.hero-grid > *,.prose-grid > *,.ogr-grid > *,.zay-grid > *,
+.cards > *,.calc-grid > *{min-width:0}
+
+/* Узкий экран: у калькулятора отнимали поля, надписи не влезали */
+@media (max-width:479px){
+  .calc{padding:18px}
+  .calc-choice{font-size:9.5px;letter-spacing:.04em;flex-wrap:wrap}
+  .calc-locked{gap:6px}
+}
 </style>
 </head>
 <body>

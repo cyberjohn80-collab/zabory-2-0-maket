@@ -258,7 +258,7 @@ p{text-wrap:pretty}
 @media (min-width:1080px){.hero{padding:88px 0 0;min-height:min(94svh,980px);
   display:grid;align-content:space-between}}
 .hero-grid{display:grid;gap:40px var(--gutter)}
-@media (min-width:1080px){.hero-grid.g12{grid-template-columns:repeat(12,minmax(0,1fr));
+@media (min-width:900px){.hero-grid.g12{grid-template-columns:repeat(12,minmax(0,1fr));
   align-items:start}
   .hero-grid > *:first-child{grid-column:span 7}
   .hero-grid > aside{grid-column:span 4 / -1}}
@@ -303,13 +303,25 @@ h1{font-size:var(--t-display);margin-bottom:24px}
 .jump .ic{width:15px;height:15px;color:#8b8377;flex:none}
 .jump a:hover .ic{color:var(--signal)}
 
+
+/* На 320–400 px правый блок шапки (телефон + кнопка) шире самой строки.
+   Телефон остаётся ссылкой в подвале и в плавающей кнопке. */
+@media (max-width:440px){
+  .header-phone,.header-hours{display:none}
+  .header-right{gap:10px}
+  .logo-img{width:92px}
+}
+@media (max-width:479px){
+  .calc-choice{font-size:10px;letter-spacing:.06em}
+  .calc-locked{gap:6px}
+}
+
 /* ── КНОПКИ: прямоугольник, без скруглений ────────────────────────── */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
   font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.1em;
   text-transform:uppercase;padding:15px 26px;border:1px solid var(--signal-ink);
   background:var(--signal-ink);color:#fff;cursor:pointer;transition:background .15s}
 .btn:hover{background:#8a300a;text-decoration:none;color:#fff}
-.btn:not(.btn--block){min-width:270px}
 .btn--lg{padding:17px 30px}
 /* у кнопки в шапке две надписи: длинная и короткая. Показывается одна */
 .cta-short{display:none}
@@ -354,7 +366,7 @@ input[type=range]{width:100%;accent-color:var(--signal-ink)}
 
 /* ── УСТРОЙСТВО: пункты листа, разделённые линейками ──────────────── */
 .prose-grid{display:grid;gap:48px var(--gutter);margin-top:var(--step)}
-@media (min-width:1080px){.prose-grid.g12{grid-template-columns:minmax(0,1fr) 330px;
+@media (min-width:900px){.prose-grid.g12{grid-template-columns:minmax(0,1fr) 330px;
   align-items:start}}
 .chunk{padding:26px 0;border-top:1px solid var(--rule)}
 .chunk:first-of-type{border-top:0;padding-top:0}
@@ -433,7 +445,7 @@ td{font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--ink)}
 
 /* ── ОГРАНИЧЕНИЯ ──────────────────────────────────────────────────── */
 .ogr-grid{display:grid;gap:var(--step) var(--gutter);margin-top:var(--step)}
-@media (min-width:1080px){.ogr-grid.g12{grid-template-columns:340px minmax(0,1fr);
+@media (min-width:900px){.ogr-grid.g12{grid-template-columns:340px minmax(0,1fr);
   align-items:start}}
 .ogr-photo{margin:0;position:relative}
 .ogr-photo img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--ink)}
@@ -552,8 +564,10 @@ td{font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--ink)}
 .band-phone:hover{background:rgba(255,255,255,.09);color:#fff;text-decoration:none}
 
 /* ── ОТЗЫВЫ: одна лента, ровный низ ───────────────────────────────── */
-.rating-strip{display:block;width:min(100%,380px);height:auto;margin-top:var(--step);
-  border:1px solid var(--rule);padding:10px;background:var(--paper)}
+.rating-strip{display:block;width:min(100%,360px);height:auto;margin-top:var(--step)}
+/* поля и рамка — на обёртке, а не на самом снимке: иначе коробка
+   перестаёт совпадать с его пропорцией */
+.footer-rating .rating-strip{margin-top:0}
 .rev-collage{display:grid;gap:var(--gutter);margin-top:36px;align-items:start}
 @media (min-width:760px){.rev-collage{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:1180px){.rev-collage{grid-template-columns:repeat(4,1fr)}}
@@ -567,7 +581,7 @@ td{font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--ink)}
 #zayavka{padding:76px 0}
 @media (min-width:1080px){#zayavka{padding:96px 0}}
 .zay-grid{display:grid;gap:40px var(--gutter);margin-top:var(--step)}
-@media (min-width:1080px){.zay-grid.g12{grid-template-columns:minmax(0,1fr) 440px;
+@media (min-width:900px){.zay-grid.g12{grid-template-columns:minmax(0,1fr) 440px;
   align-items:start}}
 .zay-say h2{font-size:var(--t-head)}
 .zay-text{margin-top:16px;color:var(--muted);max-width:60ch}
@@ -619,7 +633,63 @@ input:focus{border-color:var(--ink);outline:none}
   padding:5px 9px;color:var(--muted)}
 .rise{opacity:1;transform:none}
 .g12{display:grid;gap:var(--step) var(--gutter);grid-template-columns:1fr}
-@media (min-width:900px){.g12{grid-template-columns:repeat(12,minmax(0,1fr))}}
+/* Утилита на двенадцать колонок НЕ применяется к элементам со своей
+   сеткой: иначе она перебивает их в щели между порогами и колонки
+   схлопываются. Так и было — карточка цены в 54 px при 920 px окна. */
+@media (min-width:900px){
+  .g12:not(.hero-grid):not(.prose-grid):not(.ogr-grid):not(.zay-grid):not(.diptih)
+    {grid-template-columns:repeat(12,minmax(0,1fr))}
+}
+
+
+/* ── Правила, которых не хватало ─────────────────────────────────────
+   `height:auto` для всех картинок: у плашки рейтингов в подвале нет
+   класса, и без этого она сжималась с 425 px до 234 при нетронутой
+   высоте 127 — снимок раздавлен по горизонтали. */
+img{height:auto}
+.footer-rating img{width:100%;max-width:250px}
+.footer-rating span{display:block;font-size:11px;margin-top:8px;opacity:.72}
+
+/* Наименьшая ширина кнопки не должна быть больше места под неё */
+.btn{max-width:100%}
+.btn:not(.btn--block){min-width:min(266px,100%)}
+
+/* Колонка сетки по умолчанию не сжимается уже своего содержимого
+   и растягивает обёртку. Разрешаем сжиматься. */
+.hero-grid > *,.prose-grid > *,.ogr-grid > *,.zay-grid > *,
+.cards > *,.calc-grid > *{min-width:0}
+
+/* Узкий экран: у калькулятора отнимали поля, надписи не влезали */
+@media (max-width:479px){
+  .calc{padding:18px}
+  .calc-choice{font-size:9.5px;letter-spacing:.04em;flex-wrap:wrap}
+  .calc-locked{gap:6px}
+}
+
+
+/* ── Правила, которых не хватало ─────────────────────────────────────
+   `height:auto` для всех картинок: у плашки рейтингов в подвале нет
+   класса, и без этого она сжималась с 425 px до 234 при нетронутой
+   высоте 127 — снимок раздавлен по горизонтали. */
+img{height:auto}
+.footer-rating img{width:100%;max-width:250px}
+.footer-rating span{display:block;font-size:11px;margin-top:8px;opacity:.72}
+
+/* Наименьшая ширина кнопки не должна быть больше места под неё */
+.btn{max-width:100%}
+.btn:not(.btn--block){min-width:min(266px,100%)}
+
+/* Колонка сетки по умолчанию не сжимается уже своего содержимого
+   и растягивает обёртку. Разрешаем сжиматься. */
+.hero-grid > *,.prose-grid > *,.ogr-grid > *,.zay-grid > *,
+.cards > *,.calc-grid > *{min-width:0}
+
+/* Узкий экран: у калькулятора отнимали поля, надписи не влезали */
+@media (max-width:479px){
+  .calc{padding:18px}
+  .calc-choice{font-size:9.5px;letter-spacing:.04em;flex-wrap:wrap}
+  .calc-locked{gap:6px}
+}
 
 /* Мера набора — потолок последним правилом */
 .section-head p,.chunk p,.card p,.sister p,.mother p,.spec-note,.qa p,
