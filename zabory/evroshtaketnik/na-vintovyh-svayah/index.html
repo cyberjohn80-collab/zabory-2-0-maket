@@ -148,8 +148,15 @@
   --step:32px;                 /* единственный шаг между блоками */
   --pad:160px;                 /* единственное поле секции по вертикали */
   --half:16px;                 /* половинный шаг, для мелких связок */
-  /* ширины по колонкам: 7 · 6 · 5 · 4 колонки при жёлобе 20 */
-  --w7:680px; --w6:580px; --w5:480px; --w4:380px;
+  /* ширины по колонкам считаются из контейнера: вписанные числом,
+     они разъезжаются при первой же смене ширины контейнера */
+  --col:calc((var(--container) - 11 * var(--gutter)) / 12);
+  --w7:calc(7 * var(--col) + 6 * var(--gutter));
+  --w6:calc(6 * var(--col) + 5 * var(--gutter));
+  --w5:calc(5 * var(--col) + 4 * var(--gutter));
+  --w4:calc(4 * var(--col) + 3 * var(--gutter));
+  /* полоса «на вынос» шире контейнера, но не во всю ширину окна */
+  --bleed:min(calc(100vw - var(--sbw, 0px)), calc(var(--container) + 440px));
   --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
   --rule:#ded8cd;              /* линия чертежа */
   --header-h:72px;
@@ -170,13 +177,30 @@ html{accent-color:var(--accent-ink)}
 a{color:var(--accent-ink);text-decoration:none}
 a:hover{color:var(--accent-ink-hover);text-decoration:underline}
 .wrap{width:min(100% - 32px,var(--container));margin-inline:auto}
+
+/* ── Ступени под широкие экраны ───────────────────────────────────────
+   До 1600 px макет живёт в своих 1180 — это его родной размер.
+   Выше контейнер, поля и жёлоба растут вместе с окном, иначе на 4К
+   страница превращается в ленту посреди пустого поля. Кегль основного
+   текста поднимается на верхних ступенях: 16 px на экране в 3840 px
+   читается как петит. */
+@media (min-width:1600px){
+  :root{--container:1320px;--gutter:22px;--pad:190px;--step:36px}
+}
+@media (min-width:2100px){
+  :root{--container:1500px;--gutter:24px;--pad:220px;--step:40px}
+  body{font-size:17px}
+}
+@media (min-width:2800px){
+  :root{--container:1720px;--gutter:28px;--pad:260px;--step:46px}
+  body{font-size:18.5px}
+}
 /* Во всю ширину экрана, как у Longbow и Polestar.
    100vw считает ширину ОКНА вместе с вертикальной полосой прокрутки,
    поэтому даёт горизонтальный скролл там, где полоса занимает место.
    Ширину полосы меряет скрипт и кладёт в --sbw. */
-.bleed{width:calc(100vw - var(--sbw, 0px));
-  max-width:calc(100vw - var(--sbw, 0px));
-  margin-left:calc(50% - (100vw - var(--sbw, 0px)) / 2)}
+.bleed{width:var(--bleed);max-width:var(--bleed);
+  margin-left:calc(50% - var(--bleed) / 2)}
 /* Сетка на 12 колонок. Ниже 900 px всё складывается в одну колонку —
    на узком экране колонки только мешают. */
 .g12{display:grid;gap:var(--step) var(--gutter);grid-template-columns:1fr}
@@ -323,7 +347,7 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
     radial-gradient(circle at 76% 30%, rgba(232,98,28,.22), transparent 26%),
     url('../../../img/evroshtaketnik-svai/hero-1800.webp')}
 }
-@media (min-width:900px){.hero{padding:var(--pad) 0 0;min-height:100svh;
+@media (min-width:900px){.hero{padding:var(--pad) 0 0;min-height:min(100svh,1040px);
   display:grid;align-content:space-between}}
 
 @media (min-width:900px){.hero-grid > *:first-child{grid-column:span 7}
@@ -370,12 +394,12 @@ h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(38px,6vw,84px);line-heig
 /* Чертёжная сетка: направляющие 12 колонок, едва различимые.
    Держит взгляд и напоминает, что под макетом есть система. */
 .section{position:relative}
-.section::before{content:"";position:absolute;inset:0;pointer-events:none;
-  opacity:.28;
-  background-image:repeating-linear-gradient(90deg,
-    var(--rule) 0 1px, transparent 1px 100px);
-  background-position:130px 0;background-size:1200px 100%;
-  background-repeat:no-repeat;
+.section::before{content:"";position:absolute;top:0;bottom:0;
+  left:50%;width:var(--container);transform:translateX(-50%);
+  pointer-events:none;opacity:.28;
+  background-image:linear-gradient(90deg,var(--rule) 0 1px,transparent 1px);
+  background-size:calc((100% + var(--gutter)) / 12) 100%;
+  background-repeat:repeat-x;
   -webkit-mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent);
   mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent)}
 @media (max-width:899px){.section::before{display:none}}
@@ -610,7 +634,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
   background-image:
     linear-gradient(100deg, rgba(16,13,11,.94) 0%, rgba(16,13,11,.86) 46%, rgba(16,13,11,.5) 100%),
     var(--band-img)}
-@media (min-width:900px){.band{padding:var(--pad) 0;min-height:72vh;display:grid;align-items:center}}
+@media (min-width:900px){.band{padding:var(--pad) 0;min-height:min(72vh,760px);display:grid;align-items:center}}
 .band-inner{max-width:var(--w7)}
 .band h2{font-size:clamp(25px,3.4vw,36px);margin-bottom:14px}
 .band p{color:#cfc9c1;font-size:16px;max-width:var(--w6)}
@@ -688,6 +712,16 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
   html{scroll-behavior:auto}
   .rise{opacity:1;transform:none}
 }
+
+
+/* ── Мера набора (правило идёт последним: иначе
+   его перебивают более поздние с той же силой) ──────────────────────────────────────────────────────
+   Строка длиннее семидесяти пяти знаков читается тяжело: глаз теряет
+   начало следующей. Контейнер растёт вместе с окном, и без потолка
+   подпись под таблицей вытягивалась на 228 знаков. Потолок в `ch`
+   считается от кегля самой строки, поэтому держится на любой ступени. */
+.section-head p, .chunk p, .card p, .sister p, .mother p, .spec-note,
+.qa p, .obj-text, .zay-text, .band p, figcaption{max-width:min(100%,68ch)}
 </style>
 </head>
 <body>
