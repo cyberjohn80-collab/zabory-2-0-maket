@@ -23,7 +23,8 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2317191c'/%3E%3Cg fill='%23e8621c'%3E%3Crect x='6' y='8' width='4' height='18' rx='1.4'/%3E%3Crect x='14' y='8' width='4' height='18' rx='1.4'/%3E%3Crect x='22' y='8' width='4' height='18' rx='1.4'/%3E%3C/g%3E%3C/svg%3E"/>
 
-<link rel="preload" as="image" href="../../../img/evroshtaketnik-svai/hero-1200.webp" media="(min-width:760px)"/>
+<link rel="preload" as="image" href="../../../img/evroshtaketnik-svai/hero-1800.webp" media="(min-width:1440px)"/>
+<link rel="preload" as="image" href="../../../img/evroshtaketnik-svai/hero-1200.webp" media="(min-width:760px) and (max-width:1439px)"/>
 <link rel="preload" as="image" href="../../../img/evroshtaketnik-svai/hero-800.webp" media="(max-width:759px)"/>
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../fonts/inter-var-cyrillic.woff2"/>
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../fonts/inter-var-latin.woff2"/>
@@ -133,7 +134,7 @@
 @font-face{font-family:'Manrope';font-style:normal;font-weight:700 800;font-display:swap;
   src:url('../../../fonts/manrope-var-dopolnenie.woff2') format('woff2');unicode-range:U+20BD}
 :root{
-  --band-img:url('../../../img/evroshtaketnik-svai/cex-1800.webp');
+  --band-img:url('../../../img/evroshtaketnik-svai/cex-1200.webp');
   /* нейтралы тёплые: холодный серый спорил с оранжевым акцентом */
   --bg:#f1ece4; --surface:#fff; --dark:#262320; --darker:#191715;
   --text:#1d1b19; --muted:#6a655f; --muted-dark:#9a948c; --line:#e3dcd1;
@@ -211,7 +212,7 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
   border-top:1px solid rgba(255,255,255,.16)}
 .jump-wrap{margin-top:40px}
 @media (min-width:640px){.jump{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (min-width:900px){.jump{grid-template-columns:repeat(6,minmax(0,1fr))}}
+@media (min-width:1060px){.jump{grid-template-columns:repeat(6,minmax(0,1fr))}}
 .jump a{display:flex;align-items:center;gap:10px;padding:18px 0;color:#cfc9c1;
   font-size:14px;font-weight:600;line-height:1.25;transition:color .16s}
 .jump a:hover{color:#fff;text-decoration:none}
@@ -603,6 +604,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 .qa .a{padding:0 0 22px;color:var(--ink-2);font-size:16px;max-width:var(--w7)}
 
 /* ── широкая полоса с фотографией: разбивает череду светлых секций ── */
+@media (min-width:1200px){:root{--band-img:url('../../../img/evroshtaketnik-svai/cex-1800.webp')}}
 .band{position:relative;color:#fff;padding:80px 0;overflow:hidden;
   background:var(--darker) center/cover no-repeat;
   background-image:
