@@ -133,7 +133,7 @@
 @font-face{font-family:'Manrope';font-style:normal;font-weight:700 800;font-display:swap;
   src:url('../../../fonts/manrope-var-dopolnenie.woff2') format('woff2');unicode-range:U+20BD}
 :root{
-  --band-img:url('../../../img/evroshtaketnik-svai/obj-3-1200.webp');
+  --band-img:url('../../../img/evroshtaketnik-svai/cex-1800.webp');
   /* нейтралы тёплые: холодный серый спорил с оранжевым акцентом */
   --bg:#f1ece4; --surface:#fff; --dark:#262320; --darker:#191715;
   --text:#1d1b19; --muted:#6a655f; --muted-dark:#9a948c; --line:#e3dcd1;
@@ -316,6 +316,12 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
     linear-gradient(180deg, rgba(16,13,11,.9) 0%, rgba(16,13,11,.94) 55%, rgba(16,13,11,.97) 100%),
     url('../../../img/evroshtaketnik-svai/hero-800.webp')}
 }
+@media (min-width:1440px){
+  .hero{background-image:
+    linear-gradient(96deg, rgba(16,13,11,.95) 0%, rgba(16,13,11,.88) 44%, rgba(16,13,11,.42) 100%),
+    radial-gradient(circle at 76% 30%, rgba(232,98,28,.22), transparent 26%),
+    url('../../../img/evroshtaketnik-svai/hero-1800.webp')}
+}
 @media (min-width:900px){.hero{padding:var(--pad) 0 0;min-height:100svh;
   display:grid;align-content:space-between}}
 
@@ -414,7 +420,23 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:20px;line-height:1.22;font-wei
 .chunk:first-of-type{border-top:0;padding-top:0;margin-top:0}
 .chunk .ibox{grid-row:span 2;align-self:start;margin-top:3px}
 /* иллюстрация внутри чанка: вторая колонка, чтобы не ломать сетку */
-.chunk-photo{grid-column:2;margin-top:16px}
+.chunk-photo{grid-column:2;margin-top:18px}
+.chunk-photo img{max-height:280px;object-fit:cover}
+/* вертикальный кадр держим узким: он поясняет абзац, а не заменяет его */
+.chunk-photo--uzkiy{max-width:272px}
+.chunk-photo--uzkiy img{max-height:none}
+
+/* диптих под таблицей: материал и контроль материала */
+.diptih{margin-top:var(--step);gap:var(--gutter)}
+@media (min-width:900px){.diptih > figure:first-child{grid-column:span 6}
+  .diptih > figure:last-child{grid-column:span 6}}
+.diptih figure{margin:0}
+.diptih img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;
+  border-radius:var(--radius);display:block}
+.diptih figcaption{margin-top:10px;font-size:13px;color:var(--muted);
+  display:flex;gap:10px;align-items:baseline}
+.dp-no{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.1em;
+  color:var(--accent-ink);flex:none}
 .chunk-photo img{width:100%;height:auto;border-radius:var(--radius);
   border:1px solid var(--line)}
 .chunk-photo figcaption{margin-top:8px;font-size:13px;color:var(--muted)}
@@ -423,8 +445,8 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:20px;line-height:1.22;font-wei
 /* ограничения: снимок задаёт тон разделу, карточки идут колонкой */
 @media (min-width:900px){
   .ogr-grid{align-items:stretch}
-  .ogr-grid > .ogr-photo{grid-column:span 3;height:100%}
-  .ogr-grid > .cards{grid-column:span 9}
+  .ogr-grid > .ogr-photo{grid-column:span 4;height:100%}
+  .ogr-grid > .cards{grid-column:span 8}
   .ogr-photo img{height:100%}
 }
 .ogr-photo{position:relative;margin:0;border-radius:var(--radius-lg);overflow:hidden;min-height:280px}
@@ -848,6 +870,14 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
         <p>Труба с лопастью ввинчивается до плотного слоя и опирается на неразработанный
         грунт. Бетон не заливают — значит, нет и риска, что он схватится неравномерно.
         Столбы, лаги и штакетник ставят тем же выездом или на следующий день.</p>
+        <figure class="chunk-photo chunk-photo--uzkiy">
+          <img src="../../../img/evroshtaketnik-svai/svai-560.webp"
+               srcset="../../../img/evroshtaketnik-svai/svai-560.webp 560w, ../../../img/evroshtaketnik-svai/svai-840.webp 840w"
+               sizes="272px" width="560" height="747"
+               loading="lazy" decoding="async"
+               alt="Партия винтовых свай с лопастями на складе цеха"/>
+          <figcaption>Лопасть опирается на неразработанный грунт — она и держит нагрузку.</figcaption>
+        </figure>
       </div>
 
       <div class="chunk">
@@ -862,6 +892,14 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
         <p>Каждая свая идёт на свою глубину, верх опор выводится в линию. Ленте для того же
         нужна ступенчатая опалубка и планировка грунта. Полотно ведут уступами по рельефу
         или по единой линии верха — выбирают на замере.</p>
+        <figure class="chunk-photo">
+          <img src="../../../img/evroshtaketnik-svai/uklon-1200.webp"
+               srcset="../../../img/evroshtaketnik-svai/uklon-600.webp 600w, ../../../img/evroshtaketnik-svai/uklon-1200.webp 1200w"
+               sizes="(min-width:960px) 46vw, 100vw" width="1200" height="800"
+               loading="lazy" decoding="async"
+               alt="Забор из евроштакетника ведён уступами по склону участка"/>
+          <figcaption>Перепад отыгран уступами полотна: подсыпка грунта не потребовалась.</figcaption>
+        </figure>
       </div>
 
       <div class="chunk">
@@ -870,12 +908,12 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
         на глубине — скальные включения и мусор в насыпи мешают в любой сезон.
         «Зимой нельзя» — миф, «на этом участке нельзя» — вопрос замера.</p>
         <figure class="chunk-photo">
-          <img src="../../../img/oformlenie/zima-1200.webp"
-               srcset="../../../img/oformlenie/zima-760.webp 760w, ../../../img/oformlenie/zima-1200.webp 1200w"
-               sizes="(min-width:960px) 52vw, 100vw" width="1200" height="675"
+          <img src="../../../img/evroshtaketnik-svai/zima-1200.webp"
+               srcset="../../../img/evroshtaketnik-svai/zima-600.webp 600w, ../../../img/evroshtaketnik-svai/zima-1200.webp 1200w"
+               sizes="(min-width:960px) 46vw, 100vw" width="1200" height="800"
                loading="lazy" decoding="async"
-               alt="Заснеженное поле с деревьями — зимний участок под монтаж"/>
-          <figcaption>Мороз работам не мешает: мокрых процессов при закручивании сваи нет.</figcaption>
+               alt="Готовый забор из евроштакетника, установленный при снеге на участке"/>
+          <figcaption>Объект сдан по снегу: мокрых процессов при закручивании сваи нет.</figcaption>
         </figure>
       </div>
 
@@ -944,6 +982,24 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
         </table>
       </div>
     </div>
+    <div class="diptih g12">
+      <figure>
+        <img src="../../../img/evroshtaketnik-svai/profil-1200.webp"
+             srcset="../../../img/evroshtaketnik-svai/profil-600.webp 600w, ../../../img/evroshtaketnik-svai/profil-1200.webp 1200w"
+             sizes="(min-width:900px) 46vw, 100vw" width="1200" height="800"
+             loading="lazy" decoding="async"
+             alt="Крупный план профиля штакетины и зазора между штакетинами"/>
+        <figcaption><span class="dp-no">М-01</span> Профиль штакетины и зазор полотна</figcaption>
+      </figure>
+      <figure>
+        <img src="../../../img/evroshtaketnik-svai/zamer-1200.webp"
+             srcset="../../../img/evroshtaketnik-svai/zamer-600.webp 600w, ../../../img/evroshtaketnik-svai/zamer-1200.webp 1200w"
+             sizes="(min-width:900px) 46vw, 100vw" width="1200" height="800"
+             loading="lazy" decoding="async"
+             alt="Замер толщины металла штангенциркулем при приёмке партии"/>
+        <figcaption><span class="dp-no">М-02</span> Толщина листа на приёмке партии</figcaption>
+      </figure>
+    </div>
     <p class="spec-note">Параметры уточняются на замере: грунт и рельеф влияют на длину сваи и шаг опор.</p>
   </div>
 </section>
@@ -958,12 +1014,12 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
     </div>
     <div class="ogr-grid g12">
       <figure class="ogr-photo">
-        <img src="../../../img/oformlenie/shcheben-900.webp"
-             srcset="../../../img/oformlenie/shcheben-600.webp 600w, ../../../img/oformlenie/shcheben-900.webp 900w"
-             sizes="(min-width:900px) 290px, 100vw" width="900" height="1200"
+        <img src="../../../img/evroshtaketnik-svai/uchastok-900.webp"
+             srcset="../../../img/evroshtaketnik-svai/uchastok-600.webp 600w, ../../../img/evroshtaketnik-svai/uchastok-900.webp 900w"
+             sizes="(min-width:900px) 380px, 100vw" width="900" height="1200"
              loading="lazy" decoding="async"
-             alt="Крупный план щебня и камней в грунте"/>
-        <figcaption>Каменистое основание — главное, что останавливает сваю.</figcaption>
+             alt="Вид сверху на участок с готовым периметром забора и открытым грунтом"/>
+        <figcaption>Что под землёй, видно только на месте — поэтому замер, а не прайс.</figcaption>
       </figure>
 
       <div class="cards">
@@ -987,7 +1043,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 <!-- 9. Q&A именно этой страницы — источник уникальности (входит в FAQPage) -->
 <section class="section section--white" id="voprosy" aria-labelledby="h-qa">
   <div class="wrap">
-    <div class="section-head"><span class="kicker" data-no="10 /">Вопрос-ответ</span>
+    <div class="section-head"><span class="kicker" data-no="05 /">Вопрос-ответ</span>
       <h2 id="h-qa">Что спрашивают чаще всего</h2></div>
     <div class="qa-cols">
       <div>
@@ -1024,7 +1080,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 <section class="section section--white" id="varianty" aria-labelledby="h-var">
   <div class="wrap">
     <div class="section-head">
-      <span class="kicker" data-no="05 /">Другие исполнения</span>
+      <span class="kicker" data-no="06 /">Другие исполнения</span>
       <h2 id="h-var">Евроштакетник на другом основании</h2>
       <p>Если грунт на участке не подходит для сваи, в той же подкатегории есть два решения.</p>
     </div>
@@ -1051,7 +1107,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 <!-- 12. Этапы работы — переиспользуемый блок -->
 <section class="section section--warm" id="etapy" aria-labelledby="h-etapy">
   <div class="wrap">
-    <div class="section-head"><span class="kicker" data-no="06 /">Этапы работы</span>
+    <div class="section-head"><span class="kicker" data-no="07 /">Этапы работы</span>
       <h2 id="h-etapy">Как проходит заказ</h2></div>
     <div class="cards cards--4">
       <div class="card"><div class="step-top"><span class="ibox"><svg class="ic" aria-hidden="true"><use href="#i-telefon"/></svg></span><span class="step-no">01</span></div><h3>Заявка</h3><p>Уточняем задачу, длину линии, адрес и удобное время выезда.</p></div>
@@ -1066,23 +1122,23 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 <section class="section section--white" id="raboty" aria-labelledby="h-raboty">
   <div class="wrap">
     <div class="section-head">
-      <span class="kicker" data-no="07 /">Портфолио</span>
+      <span class="kicker" data-no="08 /">Портфолио</span>
       <h2 id="h-raboty">Наши работы: евроштакетник на сваях</h2>
-      <p>Съёмка объектов — своя, без стока: это отдельное требование к странице.
-        Стоком оформлены только иллюстрации в тексте.</p>
+      <p>Все снимки на странице — своя съёмка объектов и цеха. Стоковых фотографий нет
+        ни в портфолио, ни в иллюстрациях.</p>
     </div>
     <div class="cards cards--4 bleed">
       <div class="card card--photo">
-        <div class="photo-wrap"><span class="photo-tag">Евроштакетник</span>
+        <div class="photo-wrap"><span class="photo-tag">Графит</span>
           <img class="card-photo" src="../../../img/evroshtaketnik-svai/obj-1-1200.webp"
           srcset="../../../img/evroshtaketnik-svai/obj-1-600.webp 600w, ../../../img/evroshtaketnik-svai/obj-1-1200.webp 1200w"
           sizes="(min-width:1000px) 23vw, (min-width:700px) 47vw, 100vw"
           width="1200" height="900" loading="lazy" decoding="async"
-          alt="Забор из коричневого евроштакетника с откатными воротами перед частным домом"/></div>
+          alt="Забор из графитового евроштакетника по фасаду участка со строящимся домом"/></div>
         <div class="card-body">
-          <h3>Коричневый, откатные ворота</h3>
-          <p class="obj-text">Линия по фасаду и двум боковым сторонам, откатные ворота с автоматикой.
-            Участок с уклоном вдоль дороги — перепад отыгран разной глубиной закручивания опор.</p>
+          <h3>Графит по фасаду, дом в стройке</h3>
+          <p class="obj-text">Забор поставлен до окончания стройки: сваям не нужна пауза на бетон,
+            а огороженный участок можно закрыть от посторонних уже на этапе коробки.</p>
           <ul class="obj-spec">
             <li><svg class="ic" aria-hidden="true"><use href="#i-lineyka"/></svg><span>Высота 2,0 м</span></li>
             <li><svg class="ic" aria-hidden="true"><use href="#i-svaya"/></svg><span>Сваи, шаг 2,5 м</span></li>
@@ -1092,31 +1148,31 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
         </div>
       </div>
       <div class="card card--photo">
-        <div class="photo-wrap"><span class="photo-tag">Винтовые сваи</span>
+        <div class="photo-wrap"><span class="photo-tag">Светло-серый</span>
           <img class="card-photo" src="../../../img/evroshtaketnik-svai/obj-2-1200.webp"
           srcset="../../../img/evroshtaketnik-svai/obj-2-600.webp 600w, ../../../img/evroshtaketnik-svai/obj-2-1200.webp 1200w"
           sizes="(min-width:1000px) 23vw, (min-width:700px) 47vw, 100vw"
           width="1200" height="900" loading="lazy" decoding="async"
-          alt="Винтовые сваи, вкрученные в грунт по линии будущего забора"/></div>
-        <div class="card-body"><h3>Опоры до монтажа полотна</h3><p><span class="stub" title="ЗАГЛУШКА — типоразмер и шаг не подтверждены">Сваи Ø 76 мм, шаг 2,5 м</span></p></div>
+          alt="Светло-серый забор из евроштакетника вдоль просёлочной дороги осенью"/></div>
+        <div class="card-body"><h3>Светло-серый, линия вдоль дороги</h3><p><span class="stub" title="ЗАГЛУШКА — адрес, длина и срок не подтверждены">Пушкинский г.о. · 74 м · 4 дня</span></p></div>
       </div>
       <div class="card card--photo">
-        <div class="photo-wrap"><span class="photo-tag">Евроштакетник</span>
+        <div class="photo-wrap"><span class="photo-tag">Графит</span>
           <img class="card-photo" src="../../../img/evroshtaketnik-svai/obj-3-1200.webp"
           srcset="../../../img/evroshtaketnik-svai/obj-3-600.webp 600w, ../../../img/evroshtaketnik-svai/obj-3-1200.webp 1200w"
           sizes="(min-width:1000px) 23vw, (min-width:700px) 47vw, 100vw"
           width="1200" height="900" loading="lazy" decoding="async"
-          alt="Забор из графитового евроштакетника с калиткой на участке с газоном"/></div>
-        <div class="card-body"><h3>Графит, 2,0 м, с калиткой</h3><p><span class="stub" title="ЗАГЛУШКА — адрес, длина и срок не подтверждены">Пушкинский г.о. · 52 м · 3 дня</span></p></div>
+          alt="Забор из графитового евроштакетника со скруглённым верхом штакетины"/></div>
+        <div class="card-body"><h3>Графит, скруглённая штакетина</h3><p><span class="stub" title="ЗАГЛУШКА — адрес, длина и срок не подтверждены">Мытищинский г.о. · 52 м · 3 дня</span></p></div>
       </div>
       <div class="card card--photo">
-        <div class="photo-wrap"><span class="photo-tag">Столбы и полотно</span>
+        <div class="photo-wrap"><span class="photo-tag">Зелёный</span>
           <img class="card-photo" src="../../../img/evroshtaketnik-svai/obj-4-1200.webp"
           srcset="../../../img/evroshtaketnik-svai/obj-4-600.webp 600w, ../../../img/evroshtaketnik-svai/obj-4-1200.webp 1200w"
           sizes="(min-width:1000px) 23vw, (min-width:700px) 47vw, 100vw"
           width="1200" height="900" loading="lazy" decoding="async"
-          alt="Забор из евроштакетника с кирпичными столбами и калиткой между ними"/></div>
-        <div class="card-body"><h3>С кирпичными столбами</h3><p><span class="stub" title="ЗАГЛУШКА — адрес, длина и срок не подтверждены">Одинцовский г.о. · 96 м · 6 дней</span></p></div>
+          alt="Зелёный забор из евроштакетника, вид со стороны сада с цветником"/></div>
+        <div class="card-body"><h3>Зелёный, вид со стороны сада</h3><p><span class="stub" title="ЗАГЛУШКА — адрес, длина и срок не подтверждены">Одинцовский г.о. · 96 м · 6 дней</span></p></div>
       </div>
     </div>
     <p class="obj-more"><a href="/nashi-raboty/">Все объекты компании</a></p>
@@ -1126,7 +1182,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 <section class="band" aria-labelledby="h-band">
   <div class="wrap">
     <div class="band-inner">
-      <span class="kicker" data-no="08 /">Бесплатный замер</span>
+      <span class="kicker" data-no="09 /">Бесплатный замер</span>
       <h2 id="h-band">Смету считают на участке, а не по телефону</h2>
       <p>Грунт, перепад высот, коммуникации в пятне закручивания — это видно
         только на месте. Выезд по Москве и основной зоне области бесплатный.</p>
@@ -1142,7 +1198,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 <section class="section section--white" id="otzyvy" aria-labelledby="h-otz">
   <div class="wrap">
     <div class="section-head">
-      <span class="kicker" data-no="09 /">Отзывы</span>
+      <span class="kicker" data-no="10 /">Отзывы</span>
       <h2 id="h-otz">Отзывы после монтажа</h2>
       <p>Скриншоты с внешних площадок, без правок. Микроразметкой не размечаем:
         по отзывам о самом себе звёзды в выдаче не показываются с 2019 года,
