@@ -317,13 +317,15 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
 h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(38px,6vw,84px);line-height:.96;
   font-weight:800;margin:28px 0 32px;letter-spacing:-.045em}
 /* подзаголовок не спорит с заголовком: без полужирного, тише по цвету */
-.lead{font-size:18px;color:#d5cfc6;max-width:var(--w6);font-weight:400}
+.lead{font-size:20px;color:#d5cfc6;max-width:var(--w6);font-weight:400;line-height:1.5}
+/* вводный абзац: крупно и спокойно, как открывающее заявление */
+.intro{padding-block:calc(var(--pad) * .7)}
+.intro-text{font-size:clamp(19px,2.1vw,26px);line-height:1.45;color:var(--text);
+  max-width:20ch;max-width:920px;letter-spacing:-.012em;font-weight:400}
 .lead-more{margin-top:var(--half);font-size:15px;color:#a8a199;max-width:var(--w6);line-height:1.55}
-.hero-facts{list-style:none;margin-top:28px;display:grid;gap:16px}
-@media (min-width:700px){.hero-facts{grid-template-columns:1fr 1fr;gap:16px 24px}}
-.hero-facts li{display:flex;gap:12px;align-items:flex-start;font-size:14px;
-  color:#cfc9c1;line-height:1.45}
-.hero-facts b{color:#fff;font-weight:700;display:block;margin-bottom:2px}
+.hero-facts{list-style:none;margin-top:40px;display:grid;gap:14px}
+.hero-facts li{display:flex;gap:12px;align-items:center;font-size:15px;color:#cfc9c1}
+.hero-facts .ic{width:19px;height:19px;color:#ff8a4c;flex:0 0 auto}
 .hero-key{color:#ff8a4c}
 .price-card{background:var(--surface);border-radius:var(--radius-lg);padding:30px;color:var(--text)}
 .price-card .label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;
@@ -667,28 +669,13 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
       <span class="eyebrow">Своё производство · Москва и МО</span>
       <h1>Забор из евроштакетника <span class="hero-key">на винтовых сваях</span></h1>
       <p class="lead">
-        Евроштакетник на винтовых сваях — вариант, где опора закручивается в грунт
-        и принимает нагрузку сразу: бетонирование не выполняется, ждать набора прочности нечего.
-      </p>
-      <p class="lead-more">
-        Поэтому монтаж идёт круглый год, а перепад высот на участке отыгрывается разной
-        глубиной закручивания, а не подсыпкой. Зазор между штакетинами снижает ветровую
-        нагрузку на опору — связка получается легче, чем глухой забор той же высоты.
-        Замер по Москве и основной зоне области бесплатный, срок работ 2–7 дней.
+        Опора закручивается в грунт и принимает нагрузку сразу.
+        Бетонировать не нужно — монтаж идёт круглый год.
       </p>
       <ul class="hero-facts">
-        <li><span class="ibox ibox--dark"><svg class="ic" aria-hidden="true"><use href="#i-lineyka"/></svg></span><span>
-          <b>Толщина металла <span class="stub" title="ЗАГЛУШКА — толщина и стандарт не подтверждены">0,5 мм по ГОСТ Р 52146</span></b>
-          Проверяем микрометром при закупке</span></li>
-        <li><span class="ibox ibox--dark"><svg class="ic" aria-hidden="true"><use href="#i-zamer"/></svg></span><span>
-          <b>Замер бесплатный</b>
-          По Москве и основной зоне области, с проверкой грунта</span></li>
-        <li><span class="ibox ibox--dark"><svg class="ic" aria-hidden="true"><use href="#i-dogovor"/></svg></span><span>
-          <b>Срок 2–7 дней, гарантия 2 года</b>
-          Фиксируются в договоре вместе со сметой</span></li>
-        <li><span class="ibox ibox--dark"><svg class="ic" aria-hidden="true"><use href="#i-oplata"/></svg></span><span>
-          <b>Оплата по этапам</b>
-          Финальная часть — после сдачи объёма</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-lineyka"/></svg><span>Металл <span class="stub" title="ЗАГЛУШКА — толщина и стандарт не подтверждены">0,5 мм по ГОСТ Р 52146</span></span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-zamer"/></svg><span>Замер по Москве и области бесплатный</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-dogovor"/></svg><span>Срок 2–7 дней, гарантия 2 года</span></li>
       </ul>
     </div>
     <aside>
@@ -698,12 +685,6 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
         <p class="note">С материалом, доставкой и монтажом. Точная сумма — после замера.</p>
         <a class="btn btn--block btn--lg" href="#zayavka">Вызвать замерщика бесплатно</a>
         <p class="sub">Или сразу по телефону <a href="tel:+74950851399">+7 (495) 085-13-99</a></p>
-        <hr/>
-        <ul class="price-mini">
-          <li><svg class="ic" aria-hidden="true"><use href="#i-svaya"/></svg><span>Свая нагружается сразу — бетон не нужен</span></li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-moroz"/></svg><span>Монтаж круглый год, мороз не помеха</span></li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-uklon"/></svg><span>Уклон отыгрывают опоры, а не подсыпка</span></li>
-        </ul>
       </div>
     </aside>
   </div>
@@ -719,6 +700,21 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
   </nav>
 </div>
 </div>
+
+<!-- 3. Вводный абзац: отдельный пункт ТЗ, 50–100 слов, подтверждает H1 -->
+<section class="section section--white intro" aria-label="О конструкции">
+  <div class="wrap">
+    <p class="intro-text">
+      Евроштакетник на винтовых сваях — исполнение, где опора закручивается в грунт
+      и принимает нагрузку с первой минуты. Бетонирование не выполняется: ждать набора
+      прочности нечего, мокрых процессов нет, монтаж идёт круглый год. Перепад высот
+      на участке отыгрывается разной глубиной закручивания, а не подсыпкой. Зазор между
+      штакетинами снижает ветровую нагрузку — связка получается легче глухого забора
+      той же высоты. Замер по Москве и основной зоне области бесплатный,
+      срок работ&nbsp;— от двух до семи дней.
+    </p>
+  </div>
+</section>
 
 <!-- 5. Встроенный калькулятор, предзаполненный под тип и основание -->
 <section class="section" id="raschet" aria-labelledby="h-raschet">
