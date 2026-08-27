@@ -88,7 +88,13 @@
     { "@type": "Question", "name": "Меняется ли цена после начала работ?",
       "acceptedAnswer": { "@type": "Answer", "text": "После замера и согласования комплектации стоимость фиксируется в смете и договоре. Дополнительные работы выполняем только после согласования." } },
     { "@type": "Question", "name": "Какая гарантия на забор и монтаж?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Гарантия — 2 года на материалы и монтаж. Условия гарантии фиксируются в договоре." } }
+      "acceptedAnswer": { "@type": "Answer", "text": "Гарантия — 2 года на материалы и монтаж. Условия гарантии фиксируются в договоре." } },
+    { "@type": "Question", "name": "Выезд замерщика по Московской области платный?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Замер по Москве и основной зоне выезда по Московской области — бесплатный. Для удалённых адресов условия согласуем заранее." } },
+    { "@type": "Question", "name": "Нужно ли моё присутствие на замере?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Желательно: на месте решаются вопросы, которые по телефону не решить — где будут ворота и калитка, как вести полотно по уклону, где проходят коммуникации. Если приехать не получается, работаем по вашим отметкам и согласуем схему до начала работ." } },
+    { "@type": "Question", "name": "Можно ли огородить только часть участка?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Да. Считается любая комбинация сторон — только фасад, фасад с одной боковой, любая часть периметра. Остальные стороны можно доделать позже: опоры и полотно те же, стык будет незаметен." } }
   ]
 }
 </script>
@@ -318,7 +324,7 @@ h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(32px,5.1vw,54px);line-he
    по волосяной рамке — ровно та беда, что была в «Ограничениях» */
 .section--white :is(.card,.qa,.sister,.rev,.calc,.table-scroll,table,th){
   background:var(--bg)}
-.section--white .aside{background:var(--surface)}
+
 .section--white th{background:#eae3d8}
 .section--warm{background:linear-gradient(180deg,#f7f1e8,#f3ece2)}
 .section-head{max-width:70ch;margin-bottom:32px}
@@ -354,7 +360,7 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:19px;line-height:1.28;font-wei
 /* иллюстрация внутри чанка: вторая колонка, чтобы не ломать сетку */
 .chunk-photo{grid-column:2;margin-top:16px}
 .chunk-photo img{width:100%;height:auto;border-radius:var(--radius);
-  box-shadow:var(--shadow-sm)}
+  border:1px solid var(--line);box-shadow:var(--shadow-sm)}
 .chunk-photo figcaption{margin-top:8px;font-size:13px;color:var(--muted)}
 @media (max-width:559px){.chunk-photo{grid-column:1}}
 
@@ -376,10 +382,12 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:19px;line-height:1.28;font-wei
 @media (max-width:559px){.chunk{grid-template-columns:1fr}.chunk .ibox{grid-row:auto;margin-bottom:12px}}
 
 /* плитки ключевых цифр перед таблицей */
-.figures{display:grid;gap:16px;margin-bottom:24px;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.figures{display:grid;gap:12px;margin-bottom:24px;
+  grid-template-columns:repeat(auto-fit,minmax(158px,1fr))}
+@media (min-width:700px){.figures{gap:16px}}
 .figure{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
-  padding:20px;box-shadow:var(--shadow-sm);display:flex;gap:16px;align-items:flex-start}
+  padding:16px;box-shadow:var(--shadow-sm);display:flex;gap:12px;align-items:flex-start}
+@media (min-width:700px){.figure{padding:20px;gap:16px}}
 .figure .ic{width:24px;height:24px;color:var(--accent-ink);margin-top:2px}
 .figure .n{display:block;font-family:Manrope,Inter,sans-serif;font-size:22px;font-weight:800;
   letter-spacing:-.02em;line-height:1.15}
@@ -445,7 +453,14 @@ legend{font-size:14px;font-weight:600;margin-bottom:9px}
 table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px;background:var(--surface)}
 caption{text-align:left;font-size:13px;color:var(--muted);padding:12px 16px;border-bottom:1px solid var(--line)}
 th,td{padding:13px 16px;text-align:left;border-top:1px solid var(--line);vertical-align:top}
-th{width:42%;font-weight:600;color:var(--ink-2);background:#faf8f5}
+th{width:52%;font-weight:600;color:var(--ink-2);background:#faf8f5}
+/* две колонки по семь строк: значения короткие, одна широкая таблица
+   оставляла пустой всю правую половину */
+.spec-grid{display:grid;gap:18px}
+@media (min-width:860px){.spec-grid{grid-template-columns:1fr 1fr;gap:20px}}
+@media (max-width:559px){th{width:44%}}
+.spec-grid table{min-width:0}
+.spec-note{margin-top:14px;font-size:13px;color:var(--muted)}
 tbody tr:nth-child(even) td{background:#fdfcfa}
 tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 
@@ -461,7 +476,14 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 .card--photo{padding:0;overflow:hidden}
 .card-body{padding:16px}
 .card-body h3{font-size:15px}
-.obj-more{margin-top:18px;font-size:14px}
+.obj-more{margin-top:16px;font-size:14px}
+/* крупная карточка объекта: текст и параметры, иначе колонка пустует */
+.obj-text{color:var(--muted);font-size:15px;margin-top:12px;max-width:44ch}
+.obj-spec{list-style:none;display:grid;gap:10px;margin:20px 0 0}
+.obj-spec li{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--text);font-weight:600}
+.obj-spec .ic{width:18px;height:18px;color:var(--accent-ink)}
+.obj-meta{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:13px;color:var(--muted)}
 .form-card h3{font-size:22px}
 .form-card .intro{color:var(--muted);font-size:14px;margin:8px 0 18px}
 .sister{display:block;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
@@ -474,7 +496,8 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 .sister .arr{flex:0 0 auto;transition:transform .16s}
 /* схемы оснований: объясняют разницу быстрее абзаца */
 .diag{width:100%;height:auto;display:block;margin-bottom:16px;
-  background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:6px}
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:8px}
+.section--white .diag{background:var(--surface)}
 .d-ground{stroke:#a89e91;stroke-width:2;stroke-dasharray:6 5;fill:none;stroke-linecap:round}
 .d-fill{fill:#ddd5c9}
 .d-post{fill:var(--dark)}
@@ -551,11 +574,11 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 .site-footer{background:var(--darker);color:#cac4bc;padding:56px 0 30px;font-size:14px}
 .footer-grid{display:grid;gap:32px}
 @media (min-width:820px){.footer-grid{grid-template-columns:1.3fr 1fr 1fr}}
-.footer-rating{margin-top:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  border-radius:var(--radius);padding:12px 14px;display:inline-block}
+.footer-rating{margin-top:20px;background:var(--surface);border-radius:var(--radius);
+  padding:12px 14px 10px;display:inline-block;box-shadow:0 10px 30px -18px rgba(0,0,0,.9)}
 .footer-rating img{width:100%;max-width:270px;height:auto}
-.footer-rating span{display:block;font-size:12px;color:var(--muted-dark);margin-top:8px;
-  letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+.footer-rating span{display:block;font-size:11px;color:var(--muted);margin-top:8px;
+  letter-spacing:.06em;text-transform:uppercase;font-weight:800;text-align:center}
 .site-footer h2{font-size:12px;font-family:Inter,sans-serif;font-weight:800;color:#fff;
   letter-spacing:.08em;text-transform:uppercase;margin-bottom:15px}
 .site-footer a{color:#cac4bc}
@@ -829,27 +852,35 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
       <div class="figure"><svg class="ic" aria-hidden="true"><use href="#i-chasy"/></svg><span><span class="n">2 – 7 дней</span><span class="t">срок работ</span></span></div>
     </div>
 
-    <div class="table-scroll">
-      <table>
-        <caption>Параметры уточняются на замере: грунт и рельеф влияют на длину сваи и шаг опор.</caption>
-        <tbody>
-          <tr><th scope="row">Полотно</th><td>Металлический евроштакетник, монтаж с зазором</td></tr>
-          <tr><th scope="row">Толщина металла штакетины</th><td><span class="stub" title="ЗАГЛУШКА — толщина и стандарт не подтверждены">0,5 мм, ГОСТ Р 52146</span> — проверяется микрометром при закупке</td></tr>
-          <tr><th scope="row">Покрытие</th><td><span class="stub" title="ЗАГЛУШКА — тип и толщина покрытия не подтверждены">Полимерное, полиэстер, 25 мкм</span></td></tr>
-          <tr><th scope="row">Цвета</th><td>Серый графит, Белый, Золотой дуб</td></tr>
-          <tr><th scope="row">Высота полотна</th><td>1,5 – 2,5 м</td></tr>
-          <tr><th scope="row">Шаг между штакетинами</th><td><span class="stub" title="ЗАГЛУШКА — шаг между штакетинами не подтверждён">50 мм</span></td></tr>
-          <tr><th scope="row">Опора</th><td>Винтовая свая, <span class="stub" title="ЗАГЛУШКА — типоразмер свай не подтверждён">Ø 76 × 2500 мм, стенка 3,5 мм</span></td></tr>
-          <tr><th scope="row">Шаг опор</th><td><span class="stub" title="ЗАГЛУШКА — шаг опор не подтверждён">2,5 м</span></td></tr>
-          <tr><th scope="row">Лаги</th><td><span class="stub" title="ЗАГЛУШКА — сечение лаг не подтверждено">Профильная труба 40 × 20 × 1,5 мм</span></td></tr>
-          <tr><th scope="row">Крепление штакетины</th><td><span class="stub" title="ЗАГЛУШКА — способ крепления не подтверждён">Вытяжная заклёпка, 4 шт. на штакетину</span></td></tr>
-          <tr><th scope="row">Сезон монтажа</th><td>Круглый год, включая отрицательные температуры</td></tr>
-          <tr><th scope="row">Срок работ</th><td>2 – 7 дней</td></tr>
-          <tr><th scope="row">Гарантия</th><td>2 года на материалы и монтаж, фиксируется в договоре</td></tr>
-          <tr><th scope="row">Оплата</th><td>Поэтапная; финальная часть — после сдачи согласованного объёма</td></tr>
-        </tbody>
-      </table>
+    <div class="spec-grid">
+      <div class="table-scroll">
+        <table>
+          <tbody>
+            <tr><th scope="row">Полотно</th><td>Металлический евроштакетник, монтаж с зазором</td></tr>
+            <tr><th scope="row">Толщина металла штакетины</th><td><span class="stub" title="ЗАГЛУШКА — толщина и стандарт не подтверждены">0,5 мм, ГОСТ Р 52146</span> — проверяется микрометром при закупке</td></tr>
+            <tr><th scope="row">Покрытие</th><td><span class="stub" title="ЗАГЛУШКА — тип и толщина покрытия не подтверждены">Полимерное, полиэстер, 25 мкм</span></td></tr>
+            <tr><th scope="row">Цвета</th><td>Серый графит, Белый, Золотой дуб</td></tr>
+            <tr><th scope="row">Высота полотна</th><td>1,5 – 2,5 м</td></tr>
+            <tr><th scope="row">Шаг между штакетинами</th><td><span class="stub" title="ЗАГЛУШКА — шаг между штакетинами не подтверждён">50 мм</span></td></tr>
+            <tr><th scope="row">Опора</th><td>Винтовая свая, <span class="stub" title="ЗАГЛУШКА — типоразмер свай не подтверждён">Ø 76 × 2500 мм, стенка 3,5 мм</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <tbody>
+            <tr><th scope="row">Шаг опор</th><td><span class="stub" title="ЗАГЛУШКА — шаг опор не подтверждён">2,5 м</span></td></tr>
+            <tr><th scope="row">Лаги</th><td><span class="stub" title="ЗАГЛУШКА — сечение лаг не подтверждено">Профильная труба 40 × 20 × 1,5 мм</span></td></tr>
+            <tr><th scope="row">Крепление штакетины</th><td><span class="stub" title="ЗАГЛУШКА — способ крепления не подтверждён">Вытяжная заклёпка, 4 шт. на штакетину</span></td></tr>
+            <tr><th scope="row">Сезон монтажа</th><td>Круглый год, включая отрицательные температуры</td></tr>
+            <tr><th scope="row">Срок работ</th><td>2 – 7 дней</td></tr>
+            <tr><th scope="row">Гарантия</th><td>2 года на материалы и монтаж, фиксируется в договоре</td></tr>
+            <tr><th scope="row">Оплата</th><td>Поэтапная; финальная часть — после сдачи согласованного объёма</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+    <p class="spec-note">Параметры уточняются на замере: грунт и рельеф влияют на длину сваи и шаг опор.</p>
   </div>
 </section>
 
@@ -955,7 +986,8 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
     <div class="section-head">
       <span class="kicker">Портфолио</span>
       <h2 id="h-raboty">Наши работы: евроштакетник на сваях</h2>
-      <p>Реальные объекты. Стоковые фото не используем — это отдельное требование к странице.</p>
+      <p>Съёмка объектов — своя, без стока: это отдельное требование к странице.
+        Стоком оформлены только иллюстрации в тексте.</p>
     </div>
     <div class="cards cards--4">
       <div class="card card--photo">
@@ -965,7 +997,17 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
           sizes="(min-width:1000px) 23vw, (min-width:700px) 47vw, 100vw"
           width="1200" height="900" loading="lazy" decoding="async"
           alt="Забор из коричневого евроштакетника с откатными воротами перед частным домом"/></div>
-        <div class="card-body"><h3>Коричневый, откатные ворота</h3><p><span class="stub" title="ЗАГЛУШКА — адрес, длина и срок не подтверждены">Дмитровский г.о. · 68 м · 4 дня</span></p></div>
+        <div class="card-body">
+          <h3>Коричневый, откатные ворота</h3>
+          <p class="obj-text">Линия по фасаду и двум боковым сторонам, откатные ворота с автоматикой.
+            Участок с уклоном вдоль дороги — перепад отыгран разной глубиной закручивания опор.</p>
+          <ul class="obj-spec">
+            <li><svg class="ic" aria-hidden="true"><use href="#i-lineyka"/></svg><span>Высота 2,0 м</span></li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-svaya"/></svg><span>Сваи, шаг 2,5 м</span></li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-chasy"/></svg><span><span class="stub" title="ЗАГЛУШКА — срок не подтверждён">4 дня</span></span></li>
+          </ul>
+          <p class="obj-meta"><span class="stub" title="ЗАГЛУШКА — адрес и длина не подтверждены">Дмитровский г.о. · 68 м</span></p>
+        </div>
       </div>
       <div class="card card--photo">
         <div class="photo-wrap"><span class="photo-tag">Винтовые сваи</span>
@@ -1078,6 +1120,10 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
           <div class="a">После замера и согласования комплектации стоимость фиксируется в смете и договоре. Дополнительные работы выполняем только после согласования.</div></details>
         <details class="qa"><summary>Какая гарантия на забор и монтаж?</summary>
           <div class="a">Гарантия — 2 года на материалы и монтаж. Условия гарантии фиксируются в договоре.</div></details>
+        <details class="qa"><summary>Нужно ли моё присутствие на замере?</summary>
+          <div class="a">Желательно: на месте решаются вопросы, которые по телефону не решить — где будут ворота и калитка, как вести полотно по уклону, где проходят коммуникации. Если приехать не получается, работаем по вашим отметкам и согласуем схему до начала работ.</div></details>
+        <details class="qa"><summary>Можно ли огородить только часть участка?</summary>
+          <div class="a">Да. Считается любая комбинация сторон — только фасад, фасад с одной боковой, любая часть периметра. Остальные стороны можно доделать позже: опоры и полотно те же, стык будет незаметен.</div></details>
       </div>
 
       <div class="card form-card">
