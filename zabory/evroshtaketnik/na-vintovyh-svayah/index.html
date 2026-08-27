@@ -150,7 +150,7 @@
   /* ширины по колонкам: 7 · 6 · 5 · 4 колонки при жёлобе 20 */
   --w7:680px; --w6:580px; --w5:480px; --w4:380px;
   --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
-  --rule:#d6d0c6;              /* линия чертежа */
+  --rule:#ded8cd;              /* линия чертежа */
   --header-h:72px;
   --shadow-sm:none;
   --shadow-md:0 30px 70px -40px rgba(28,22,16,.45);
@@ -316,7 +316,8 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
     linear-gradient(180deg, rgba(16,13,11,.9) 0%, rgba(16,13,11,.94) 55%, rgba(16,13,11,.97) 100%),
     url('../../../img/evroshtaketnik-svai/hero-800.webp')}
 }
-@media (min-width:900px){.hero{padding:var(--pad) 0 0;min-height:600px}}
+@media (min-width:900px){.hero{padding:var(--pad) 0 0;min-height:100svh;
+  display:grid;align-content:space-between}}
 
 @media (min-width:900px){.hero-grid > *:first-child{grid-column:span 7}
   .hero-grid > *:last-child{grid-column:span 5}}
@@ -363,7 +364,7 @@ h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(38px,6vw,84px);line-heig
    Держит взгляд и напоминает, что под макетом есть система. */
 .section{position:relative}
 .section::before{content:"";position:absolute;inset:0;pointer-events:none;
-  opacity:.5;
+  opacity:.28;
   background-image:repeating-linear-gradient(90deg,
     var(--rule) 0 1px, transparent 1px 100px);
   background-position:130px 0;background-size:1200px 100%;
@@ -608,6 +609,22 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
   letter-spacing:.08em;text-transform:uppercase;margin-bottom:11px}
 .rev-shot{width:100%;height:auto;border:1px solid var(--line);border-radius:8px}
 
+/* вопросы одним блоком в две колонки по темам */
+.qa-cols{display:grid;gap:40px}
+@media (min-width:900px){.qa-cols{grid-template-columns:1fr 1fr;gap:var(--gutter) 56px}}
+.qa-group{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+
+/* финал: слева довод, справа форма */
+.zay-grid{align-items:start}
+@media (min-width:900px){
+  .zay-grid{align-items:center}
+  .zay-grid > .zay-say{grid-column:span 6}
+  .zay-grid > .form-card{grid-column:span 5 / -1}
+}
+.zay-text{margin-top:20px;color:var(--muted);font-size:17px;max-width:var(--w5)}
+.zay-say .form-trust{border-top:0;margin-top:32px;padding-top:0}
+
 /* ── форма ── */
 .lead-form{display:grid;gap:16px;max-width:520px}
 .lead-form input[type=text],.lead-form input[type=tel]{width:100%;padding:13px 15px;border:1px solid var(--line);
@@ -734,7 +751,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
     <a href="#harakteristiki"><svg class="ic" aria-hidden="true"><use href="#i-tablica"/></svg><span>Характеристики</span></a>
     <a href="#ogranicheniya"><svg class="ic" aria-hidden="true"><use href="#i-vnimanie"/></svg><span>Ограничения</span></a>
     <a href="#raboty"><svg class="ic" aria-hidden="true"><use href="#i-foto"/></svg><span>Наши работы</span></a>
-    <a href="#voprosy-konstrukciya"><svg class="ic" aria-hidden="true"><use href="#i-vopros"/></svg><span>Вопросы</span></a>
+    <a href="#voprosy"><svg class="ic" aria-hidden="true"><use href="#i-vopros"/></svg><span>Вопросы</span></a>
   </nav>
 </div>
 </div>
@@ -828,37 +845,30 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 
       <div class="chunk">
         <span class="ibox"><svg class="ic" aria-hidden="true"><use href="#i-svaya"/></svg></span><h3>Свая заменяет бетонный фундамент и нагружается сразу</h3>
-        <p>Винтовая свая — труба с лопастью, которая ввинчивается в грунт до плотного слоя.
-        Лопасть опирается на неразработанный грунт, поэтому опора несёт нагрузку с момента
-        закручивания. Бетонирование не выполняется: нет мокрых процессов, нет ожидания набора
-        прочности, нет риска, что бетон схватится неравномерно. Практический итог — столбы,
-        лаги и штакетник ставятся тем же или следующим выездом, а не через неделю.</p>
+        <p>Труба с лопастью ввинчивается до плотного слоя и опирается на неразработанный
+        грунт. Бетон не заливают — значит, нет и риска, что он схватится неравномерно.
+        Столбы, лаги и штакетник ставят тем же выездом или на следующий день.</p>
       </div>
 
       <div class="chunk">
         <span class="ibox"><svg class="ic" aria-hidden="true"><use href="#i-veter"/></svg></span><h3>Зазор между штакетинами снижает нагрузку на опору</h3>
-        <p>Евроштакетник монтируется с промежутком, полотно продувается. Глухой забор той же
-        высоты работает как парус и передаёт на опору заметно большее усилие при ветре.
-        Именно поэтому связка «евроштакетник + свая» рабочая: опора нагружена мягче,
-        чем под сплошным профлистом, и требования к её заглублению соответственно ниже.
-        Конкретная длина и диаметр сваи под ваш участок — <span class="stub" title="ЗАГЛУШКА — типоразмер свай не подтверждён">Ø 76 мм, длина 2500 мм, стенка 3,5 мм</span>.</p>
+        <p>Глухой забор той же высоты работает как парус. У евроштакетника полотно
+        продувается, и опора нагружена мягче — требования к заглублению ниже. Типоразмер
+        под участок: <span class="stub" title="ЗАГЛУШКА — типоразмер свай не подтверждён">Ø 76 мм, длина 2500 мм, стенка 3,5 мм</span>.</p>
       </div>
 
       <div class="chunk">
         <span class="ibox"><svg class="ic" aria-hidden="true"><use href="#i-uklon"/></svg></span><h3>Перепад высот отыгрывается опорами, а не подсыпкой</h3>
-        <p>На участке с уклоном каждая свая закручивается на свою глубину, и верх опор выводится
-        в нужную линию. Ленточному основанию для того же понадобилась бы ступенчатая опалубка,
-        планировка грунта или подсыпка. Полотно ведут либо уступами по рельефу, либо по единой
-        линии верха с разной высотой просвета снизу — выбор делается на замере, потому что он
-        зависит от того, что важнее: вид сверху по линии забора или отсутствие щели у земли.</p>
+        <p>Каждая свая идёт на свою глубину, верх опор выводится в линию. Ленте для того же
+        нужна ступенчатая опалубка и планировка грунта. Полотно ведут уступами по рельефу
+        или по единой линии верха — выбирают на замере.</p>
       </div>
 
       <div class="chunk">
         <span class="ibox"><svg class="ic" aria-hidden="true"><use href="#i-moroz"/></svg></span><h3>Монтаж идёт круглый год, ограничивает не мороз, а грунт</h3>
-        <p>Закручивание не требует положительной температуры — мёрзлый верхний слой проходится.
-        Зимний монтаж ограничивают не морозы, а состав грунта на глубине: скальные включения
-        и строительный мусор в насыпи мешают одинаково в любой сезон. Поэтому «зимой нельзя»
-        — миф, а «на этом участке нельзя» — вопрос, который решается на замере.</p>
+        <p>Мёрзлый верхний слой проходится. Ограничивает не температура, а состав грунта
+        на глубине — скальные включения и мусор в насыпи мешают в любой сезон.
+        «Зимой нельзя» — миф, «на этом участке нельзя» — вопрос замера.</p>
         <figure class="chunk-photo">
           <img src="../../../img/oformlenie/zima-1200.webp"
                srcset="../../../img/oformlenie/zima-760.webp 760w, ../../../img/oformlenie/zima-1200.webp 1200w"
@@ -871,8 +881,8 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 
       <div class="chunk">
         <span class="ibox"><svg class="ic" aria-hidden="true"><use href="#i-chasy"/></svg></span><h3>Срок работ — от 2 до 7 дней</h3>
-        <p>Разброс задаёт длина, количество ворот и калиток, необходимость дополнительных работ.
-        Точный срок фиксируется после замера — вместе с комплектацией и стоимостью, в договоре.</p>
+        <p>Разброс задаёт длина, ворота и калитки, дополнительные работы. Точный срок
+        фиксируется в договоре вместе с комплектацией и стоимостью.</p>
       </div>
 
     </div>
@@ -959,17 +969,15 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
       <div class="cards">
       <div class="card">
         <div class="card-head"><span class="ibox"><svg class="ic" aria-hidden="true"><use href="#i-zapret"/></svg></span><h3>Когда винтовая свая не подходит</h3></div>
-        <p><b>Скальный и щебенистый грунт.</b> Лопасть не проходит плотное каменистое основание — потребуется другое решение по фундаменту.</p>
-        <p><b>Насыпь со строительным мусором.</b> Свая упирается в обломок и останавливается выше расчётной отметки: несущая способность не набирается.</p>
-        <p><b>Коммуникации в пятне закручивания.</b> Кабель, газ, водопровод — точки опор смещаются, схему согласуют до работ.</p>
-        <p><b>Подвижные и сильно обводнённые грунты.</b> Нужен подбор длины сваи под конкретный участок, а не типовой типоразмер.</p>
+        <p><b>Скальный и щебенистый грунт.</b> Лопасть не проходит плотное каменистое основание.</p>
+        <p><b>Насыпь со строительным мусором.</b> Свая упирается в обломок выше расчётной отметки.</p>
+                <p><b>Подвижные и обводнённые грунты.</b> Длину сваи подбирают под участок, типовая не годится.</p>
       </div>
       <div class="card">
         <div class="card-head"><span class="ibox"><svg class="ic" aria-hidden="true"><use href="#i-minus"/></svg></span><h3>Что не входит в цену погонного метра</h3></div>
         <p><b>Ворота и калитки.</b> Сами конструкции и автоматика к ним — отдельные позиции сметы.</p>
         <p><b>Демонтаж старого забора.</b> Снос, вывоз, расчистка линии и спил кустарника вдоль неё.</p>
-        <p><b>Дальний выезд.</b> За пределами основной зоны обслуживания по области условия согласуются заранее.</p>
-        <p><b>Сопутствующее.</b> <span class="stub" title="ЗАГЛУШКА — перечень исключений из сметы не подтверждён">Земляные работы под коммуникации, перенос опор освещения, восстановление газона после проезда техники.</span></p>
+                <p><b>Сопутствующее.</b> <span class="stub" title="ЗАГЛУШКА — перечень исключений из сметы не подтверждён">Земляные работы под коммуникации, перенос опор освещения, восстановление газона после проезда техники.</span></p>
       </div>
       </div>
     </div>
@@ -977,18 +985,38 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 </section>
 
 <!-- 9. Q&A именно этой страницы — источник уникальности (входит в FAQPage) -->
-<section class="section" id="voprosy-konstrukciya" aria-labelledby="h-qa1">
+<section class="section section--white" id="voprosy" aria-labelledby="h-qa">
   <div class="wrap">
-    <div class="section-head"><span class="kicker" data-no="05 /">Вопросы по конструкции</span>
-      <h2 id="h-qa1">Вопросы по конструкции</h2></div>
-    <details class="qa"><summary>Нужно ли ждать, пока схватится бетон, если забор ставят на сваи?</summary>
+    <div class="section-head"><span class="kicker" data-no="10 /">Вопрос-ответ</span>
+      <h2 id="h-qa">Что спрашивают чаще всего</h2></div>
+    <div class="qa-cols">
+      <div>
+        <h3 class="qa-group">О конструкции</h3>
+        <details class="qa"><summary>Нужно ли ждать, пока схватится бетон, если забор ставят на сваи?</summary>
       <div class="a">Нет. Свая принимает нагрузку сразу после закручивания — бетонирование не выполняется, ждать набора прочности нечего. Столбы, лаги и штакетник монтируют в тот же выезд или на следующий день.</div></details>
-    <details class="qa"><summary>Можно ли ставить забор на сваях зимой?</summary>
+        <details class="qa"><summary>Можно ли ставить забор на сваях зимой?</summary>
       <div class="a">Да. Закручивание сваи не требует мокрых процессов, поэтому работы идут и при отрицательной температуре. Мёрзлый слой грунта проходится; ограничением является не мороз, а состав грунта на глубине закручивания.</div></details>
-    <details class="qa"><summary>Почему евроштакетник и винтовая свая хорошо работают вместе?</summary>
+        <details class="qa"><summary>Почему евроштакетник и винтовая свая хорошо работают вместе?</summary>
       <div class="a">Между штакетинами есть зазор, поэтому полотно продувается и ветровая нагрузка на опору заметно ниже, чем у глухого забора той же высоты. Опора работает в более лёгком режиме, а значит требования к её заглублению мягче.</div></details>
-    <details class="qa"><summary>Что будет с забором на участке с уклоном?</summary>
+        <details class="qa"><summary>Что будет с забором на участке с уклоном?</summary>
       <div class="a">Свая закручивается на разную глубину, поэтому перепад отыгрывается опорами, а не подсыпкой и не ступенчатым бетонным основанием. Полотно ведут либо уступами по рельефу, либо по единой линии верха — вариант выбирают на замере.</div></details>
+      </div>
+      <div>
+        <h3 class="qa-group">О заказе и оплате</h3>
+        <details class="qa"><summary>Сколько занимает монтаж забора?</summary>
+        <div class="a">Обычно от 2 до 7 дней — срок зависит от длины, типа основания, ворот и дополнительных работ. Точный срок фиксируем после замера.</div></details>
+        <details class="qa"><summary>Выезд замерщика по Московской области платный?</summary>
+        <div class="a">Замер по Москве и основной зоне выезда по Московской области — бесплатный. Для удалённых адресов условия согласуем заранее.</div></details>
+        <details class="qa"><summary>Меняется ли цена после начала работ?</summary>
+        <div class="a">После замера и согласования комплектации стоимость фиксируется в смете и договоре. Дополнительные работы выполняем только после согласования.</div></details>
+        <details class="qa"><summary>Какая гарантия на забор и монтаж?</summary>
+        <div class="a">Гарантия — 2 года на материалы и монтаж. Условия гарантии фиксируются в договоре.</div></details>
+        <details class="qa"><summary>Нужно ли моё присутствие на замере?</summary>
+        <div class="a">Желательно: на месте решаются вопросы, которые по телефону не решить — где будут ворота и калитка, как вести полотно по уклону, где проходят коммуникации. Если приехать не получается, работаем по вашим отметкам и согласуем схему до начала работ.</div></details>
+        <details class="qa"><summary>Можно ли огородить только часть участка?</summary>
+        <div class="a">Да. Считается любая комбинация сторон — только фасад, фасад с одной боковой, любая часть периметра. Остальные стороны можно доделать позже: опоры и полотно те же, стык будет незаметен.</div></details>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -996,7 +1024,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 <section class="section section--white" id="varianty" aria-labelledby="h-var">
   <div class="wrap">
     <div class="section-head">
-      <span class="kicker" data-no="06 /">Другие исполнения</span>
+      <span class="kicker" data-no="05 /">Другие исполнения</span>
       <h2 id="h-var">Евроштакетник на другом основании</h2>
       <p>Если грунт на участке не подходит для сваи, в той же подкатегории есть два решения.</p>
     </div>
@@ -1023,7 +1051,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 <!-- 12. Этапы работы — переиспользуемый блок -->
 <section class="section section--warm" id="etapy" aria-labelledby="h-etapy">
   <div class="wrap">
-    <div class="section-head"><span class="kicker" data-no="07 /">Этапы работы</span>
+    <div class="section-head"><span class="kicker" data-no="06 /">Этапы работы</span>
       <h2 id="h-etapy">Как проходит заказ</h2></div>
     <div class="cards cards--4">
       <div class="card"><div class="step-top"><span class="ibox"><svg class="ic" aria-hidden="true"><use href="#i-telefon"/></svg></span><span class="step-no">01</span></div><h3>Заявка</h3><p>Уточняем задачу, длину линии, адрес и удобное время выезда.</p></div>
@@ -1038,7 +1066,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 <section class="section section--white" id="raboty" aria-labelledby="h-raboty">
   <div class="wrap">
     <div class="section-head">
-      <span class="kicker" data-no="08 /">Портфолио</span>
+      <span class="kicker" data-no="07 /">Портфолио</span>
       <h2 id="h-raboty">Наши работы: евроштакетник на сваях</h2>
       <p>Съёмка объектов — своя, без стока: это отдельное требование к странице.
         Стоком оформлены только иллюстрации в тексте.</p>
@@ -1098,10 +1126,10 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 <section class="band" aria-labelledby="h-band">
   <div class="wrap">
     <div class="band-inner">
-      <span class="kicker" data-no="09 /">Бесплатный замер</span>
-      <h2 id="h-band">Посчитаем ваш участок по факту, а не по прайсу</h2>
-      <p>Инженер приедет, проверит грунт и перепад высот, определит длину свай
-        и посчитает смету на месте. По Москве и основной зоне области — бесплатно.</p>
+      <span class="kicker" data-no="08 /">Бесплатный замер</span>
+      <h2 id="h-band">Смету считают на участке, а не по телефону</h2>
+      <p>Грунт, перепад высот, коммуникации в пятне закручивания — это видно
+        только на месте. Выезд по Москве и основной зоне области бесплатный.</p>
       <div class="band-actions">
         <a class="btn btn--lg" href="#zayavka">Вызвать замерщика</a>
         <a class="band-phone" href="tel:+74950851399"><svg class="ic" aria-hidden="true"><use href="#i-telefon"/></svg>+7 (495) 085-13-99</a>
@@ -1114,7 +1142,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 <section class="section section--white" id="otzyvy" aria-labelledby="h-otz">
   <div class="wrap">
     <div class="section-head">
-      <span class="kicker" data-no="10 /">Отзывы</span>
+      <span class="kicker" data-no="09 /">Отзывы</span>
       <h2 id="h-otz">Отзывы после монтажа</h2>
       <p>Скриншоты с внешних площадок, без правок. Микроразметкой не размечаем:
         по отзывам о самом себе звёзды в выдаче не показываются с 2019 года,
@@ -1141,81 +1169,53 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
              loading="lazy" decoding="async" alt="Скриншот отзыва о компании «Заборы 2.0» на Отзовик.ру"/>
       </figure>
       <figure class="rev">
-        <figcaption class="src">Яндекс.Карты</figcaption>
-        <img class="rev-shot" src="../../../img/otzyvy/yandex-2.webp" width="593" height="316"
-             loading="lazy" decoding="async" alt="Скриншот второго отзыва о компании «Заборы 2.0» на Яндекс.Картах"/>
-      </figure>
-      <figure class="rev">
         <figcaption class="src">Yell.ru</figcaption>
         <img class="rev-shot" src="../../../img/otzyvy/yell-1.webp" width="680" height="242"
              loading="lazy" decoding="async" alt="Скриншот отзыва о компании «Заборы 2.0» на Yell.ru"/>
-      </figure>
-      <figure class="rev">
-        <figcaption class="src">Яндекс.Карты</figcaption>
-        <img class="rev-shot" src="../../../img/otzyvy/yandex-3.webp" width="600" height="312"
-             loading="lazy" decoding="async" alt="Скриншот третьего отзыва о компании «Заборы 2.0» на Яндекс.Картах"/>
       </figure>
     </div>
   </div>
 </section>
 
 <!-- 15. FAQ по заказу и оплате (второй блок FAQPage) + форма -->
-<section class="section" id="zayavka" aria-labelledby="h-qa2">
-  <div class="wrap">
-    <div class="cards cards--2 cards--top">
-      <div>
-        <div class="section-head"><span class="kicker" data-no="11 /">Вопрос-ответ</span>
-      <h2 id="h-qa2">Вопросы по заказу и оплате</h2></div>
-        <details class="qa"><summary>Сколько занимает монтаж забора?</summary>
-          <div class="a">Обычно от 2 до 7 дней — срок зависит от длины, типа основания, ворот и дополнительных работ. Точный срок фиксируем после замера.</div></details>
-        <details class="qa"><summary>Выезд замерщика по Московской области платный?</summary>
-          <div class="a">Замер по Москве и основной зоне выезда по Московской области — бесплатный. Для удалённых адресов условия согласуем заранее.</div></details>
-        <details class="qa"><summary>Меняется ли цена после начала работ?</summary>
-          <div class="a">После замера и согласования комплектации стоимость фиксируется в смете и договоре. Дополнительные работы выполняем только после согласования.</div></details>
-        <details class="qa"><summary>Какая гарантия на забор и монтаж?</summary>
-          <div class="a">Гарантия — 2 года на материалы и монтаж. Условия гарантии фиксируются в договоре.</div></details>
-        <details class="qa"><summary>Нужно ли моё присутствие на замере?</summary>
-          <div class="a">Желательно: на месте решаются вопросы, которые по телефону не решить — где будут ворота и калитка, как вести полотно по уклону, где проходят коммуникации. Если приехать не получается, работаем по вашим отметкам и согласуем схему до начала работ.</div></details>
-        <details class="qa"><summary>Можно ли огородить только часть участка?</summary>
-          <div class="a">Да. Считается любая комбинация сторон — только фасад, фасад с одной боковой, любая часть периметра. Остальные стороны можно доделать позже: опоры и полотно те же, стык будет незаметен.</div></details>
-      </div>
+<section class="section" id="zayavka" aria-labelledby="h-zay">
+  <div class="wrap zay-grid g12">
+    <div class="zay-say">
+      <span class="kicker" data-no="11 /">Заявка</span>
+      <h2 id="h-zay">Оставьте заявку</h2>
+      <p class="zay-text">Уточним задачу, согласуем удобное время и приедем на замер.
+        Ничего платить на этом шаге не нужно.</p>
+      <ul class="form-trust">
+        <li><svg class="ic" aria-hidden="true"><use href="#i-dogovor"/></svg><span>Стоимость и срок фиксируем в договоре</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-oplata"/></svg><span>Оплата по этапам, финальная — после сдачи</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-chasy"/></svg><span>Перезвоним в течение пятнадцати минут</span></li>
+      </ul>
+    </div>
+    <div class="card form-card">
 
-      <div class="card form-card">
-        <h3>Бесплатный выезд замерщика</h3>
-        <p class="intro">
-          Инженер приедет, проверит грунт и рельеф, определит длину свай и посчитает смету.
-          По Москве и основной зоне области — бесплатно.</p>
+      <form class="lead-form" id="zayavkaForm" action="/api/lead" method="post" novalidate>
+        <input type="hidden" name="stranica" value="/zabory/evroshtaketnik/na-vintovyh-svayah/"/>
+        <input type="hidden" name="polotno" value="Евроштакетник"/>
+        <input type="hidden" name="osnovanie" value="Винтовые сваи"/>
+        <input type="hidden" name="konfiguraciya" id="konfiguraciya" value=""/>
 
-        <form class="lead-form" id="zayavkaForm" action="/api/lead" method="post" novalidate>
-          <input type="hidden" name="stranica" value="/zabory/evroshtaketnik/na-vintovyh-svayah/"/>
-          <input type="hidden" name="polotno" value="Евроштакетник"/>
-          <input type="hidden" name="osnovanie" value="Винтовые сваи"/>
-          <input type="hidden" name="konfiguraciya" id="konfiguraciya" value=""/>
-
-          <div class="field">
-            <label for="imya">Ваше имя</label>
-            <input type="text" id="imya" name="imya" autocomplete="name" required placeholder="Например, Алексей"/>
-          </div>
-          <div class="field">
-            <label for="telefon">Телефон</label>
-            <input type="tel" id="telefon" name="telefon" autocomplete="tel" inputmode="tel" required placeholder="+7 (___) ___-__-__"/>
-          </div>
-          <label class="consent">
-            <input type="checkbox" name="soglasie" required/>
-            <span>Согласен на обработку персональных данных в соответствии с
-              <a href="/politika-konfidencialnosti/">политикой конфиденциальности</a> и
-              <a href="/soglasie-na-obrabotku-dannyh/">согласием на обработку данных</a>.</span>
-          </label>
-          <button class="btn btn--lg btn--block" type="submit" id="zayavkaBtn">Вызвать замерщика</button>
-          <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
-        </form>
-
-        <ul class="form-trust">
-          <li><svg class="ic" aria-hidden="true"><use href="#i-dogovor"/></svg><span>Стоимость и срок фиксируем в договоре</span></li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-oplata"/></svg><span>Оплата по этапам, финальная — после сдачи</span></li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-zamer"/></svg><span>Выезд по Москве и основной зоне области бесплатный</span></li>
-        </ul>
-      </div>
+        <div class="field">
+          <label for="imya">Ваше имя</label>
+          <input type="text" id="imya" name="imya" autocomplete="name" required placeholder="Например, Алексей"/>
+        </div>
+        <div class="field">
+          <label for="telefon">Телефон</label>
+          <input type="tel" id="telefon" name="telefon" autocomplete="tel" inputmode="tel" required placeholder="+7 (___) ___-__-__"/>
+        </div>
+        <label class="consent">
+          <input type="checkbox" name="soglasie" required/>
+          <span>Согласен на обработку персональных данных в соответствии с
+            <a href="/politika-konfidencialnosti/">политикой конфиденциальности</a> и
+            <a href="/soglasie-na-obrabotku-dannyh/">согласием на обработку данных</a>.</span>
+        </label>
+        <button class="btn btn--lg btn--block" type="submit" id="zayavkaBtn">Вызвать замерщика</button>
+        <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+      </form>
     </div>
   </div>
 </section>
