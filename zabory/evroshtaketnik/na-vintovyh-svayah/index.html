@@ -140,7 +140,7 @@
   --radius:10px; --radius-lg:16px; --container:1180px;
   --gutter:20px;               /* единственный жёлоб между колонками */
   --step:32px;                 /* единственный шаг между блоками */
-  --pad:84px;                  /* единственное поле секции по вертикали */
+  --pad:112px;                 /* единственное поле секции по вертикали */
   --half:16px;                 /* половинный шаг, для мелких связок */
   /* ширины по колонкам: 7 · 6 · 5 · 4 колонки при жёлобе 20 */
   --w7:680px; --w6:580px; --w5:480px; --w4:380px;
@@ -183,24 +183,25 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
   stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
 /* плашка под иконку */
-.ibox{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;
-  background:#fbe6d7;border:1px solid #f0c2a0;color:var(--accent-deep)}
+.ibox{width:auto;height:auto;display:grid;place-items:center;flex:0 0 auto;
+  background:none;border:0;color:var(--accent-ink)}
+.ibox .ic{width:26px;height:26px}
+/* плашка остаётся только на тёмном, где иконке нужна подложка */
+.ibox--dark{width:40px;height:40px;border-radius:12px}
 .ibox--dark{background:rgba(232,98,28,.14);border-color:rgba(232,98,28,.4);color:#ff8a4c}
 
 /* ── быстрая навигация: белая плашка, наезжающая на hero ── */
 .jump-wrap{position:relative;z-index:5}
-.jump{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
-  box-shadow:var(--shadow-md);padding:14px;display:grid;gap:8px;
-  grid-template-columns:repeat(2,minmax(0,1fr))}
-.jump-wrap{margin-top:calc(-1 * var(--step) - 4px)}
+.jump{display:grid;gap:0 var(--gutter);grid-template-columns:repeat(2,minmax(0,1fr));
+  border-top:1px solid rgba(255,255,255,.16)}
+.jump-wrap{margin-top:40px}
 @media (min-width:640px){.jump{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (min-width:900px){.jump{grid-template-columns:repeat(6,minmax(0,1fr));
-  padding:var(--gutter);gap:var(--gutter)}}
-.jump a{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
-  padding:14px 8px;border-radius:var(--radius);color:var(--text);font-size:13px;font-weight:600;
-  line-height:1.25;transition:background .16s,color .16s}
-.jump a:hover{background:var(--accent-soft);color:var(--accent-deep);text-decoration:none}
-.jump .ic{width:25px;height:25px;color:var(--accent-ink)}
+@media (min-width:900px){.jump{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.jump a{display:flex;align-items:center;gap:10px;padding:18px 0;color:#cfc9c1;
+  font-size:14px;font-weight:600;line-height:1.25;transition:color .16s}
+.jump a:hover{color:#fff;text-decoration:none}
+.jump a:hover .ic{color:var(--accent)}
+.jump .ic{width:20px;height:20px;color:#8a827a;transition:color .16s}
 
 /* ── плавающие кнопки связи ── */
 .floats{position:fixed;right:16px;bottom:18px;z-index:60;display:grid;gap:10px}
@@ -285,7 +286,7 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
 .crumbs [aria-current]{color:var(--text);font-weight:600}
 
 /* ── hero ── */
-.hero{position:relative;color:#fff;padding:48px 0 76px;background:var(--darker);
+.hero{position:relative;color:#fff;padding:48px 0 0;background:var(--darker);
   background-image:
     linear-gradient(96deg, rgba(16,13,11,.95) 0%, rgba(16,13,11,.88) 44%, rgba(16,13,11,.42) 100%),
     radial-gradient(circle at 76% 30%, rgba(232,98,28,.22), transparent 26%),
@@ -296,15 +297,15 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
     linear-gradient(180deg, rgba(16,13,11,.9) 0%, rgba(16,13,11,.94) 55%, rgba(16,13,11,.97) 100%),
     url('../../../img/evroshtaketnik-svai/hero-800.webp')}
 }
-@media (min-width:900px){.hero{padding:var(--pad) 0 calc(var(--pad) + 32px);min-height:600px}}
+@media (min-width:900px){.hero{padding:var(--pad) 0 0;min-height:600px}}
 
 @media (min-width:900px){.hero-grid > *:first-child{grid-column:span 7}
   .hero-grid > *:last-child{grid-column:span 5}}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(232,98,28,.14);
   border:1px solid rgba(232,98,28,.45);color:#ffb184;border-radius:5px;
   padding:8px 16px;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(32px,5.1vw,54px);line-height:1.04;
-  font-weight:800;margin:20px 0 20px;letter-spacing:-.032em}
+h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(36px,6.4vw,76px);line-height:.98;
+  font-weight:800;margin:24px 0 28px;letter-spacing:-.042em}
 /* подзаголовок не спорит с заголовком: без полужирного, тише по цвету */
 .lead{font-size:18px;color:#d5cfc6;max-width:var(--w6);font-weight:400}
 .lead-more{margin-top:var(--half);font-size:15px;color:#a8a199;max-width:var(--w6);line-height:1.55}
@@ -330,27 +331,24 @@ h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(32px,5.1vw,54px);line-he
 .price-mini .ic{width:19px;height:19px;color:var(--accent-ink)}
 
 /* ── общие секции ── */
-.section{padding:56px 0}
+.section{padding:64px 0}
 @media (min-width:900px){.section{padding:var(--pad) 0}}
 .section--white{background:var(--surface)}
 /* на белой секции карточка берёт тёплый тон, иначе она видна только
    по волосяной рамке — ровно та беда, что была в «Ограничениях» */
-.section--white :is(.card,.qa,.sister,.rev,.calc,.table-scroll,table,th){
-  background:var(--bg)}
+.section--white :is(.card,.sister,.rev,.calc,.table-scroll,table,th){background:var(--bg)}
 
 .section--white th{background:#eae3d8}
 .section--warm{background:linear-gradient(180deg,#f7f1e8,#f3ece2)}
 .section-head{max-width:var(--w7);margin-bottom:var(--step)}
 /* надзаголовок с чёрточкой — как над секциями исходной главной */
-.kicker{display:inline-flex;align-items:center;gap:10px;margin-bottom:13px;
-  color:var(--accent-ink);font-size:12px;font-weight:800;letter-spacing:.13em;
-  text-transform:uppercase}
-.kicker::before{content:"";width:26px;height:2px;border-radius:1px;background:var(--accent);
-  flex:0 0 auto}
-h2{font-family:Manrope,Inter,sans-serif;font-size:clamp(24px,3.2vw,34px);line-height:1.18;
-  font-weight:800;letter-spacing:-.022em}
-h3{font-family:Manrope,Inter,sans-serif;font-size:19px;line-height:1.28;font-weight:700;
-  letter-spacing:-.012em;margin-bottom:9px}
+.kicker{display:block;margin-bottom:16px;color:var(--accent-ink);font-size:12px;
+  font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+
+h2{font-family:Manrope,Inter,sans-serif;font-size:clamp(28px,4.2vw,48px);line-height:1.02;
+  font-weight:800;letter-spacing:-.036em}
+h3{font-family:Manrope,Inter,sans-serif;font-size:20px;line-height:1.22;font-weight:800;
+  letter-spacing:-.02em;margin-bottom:8px}
 .section-head p{margin-top:13px;color:var(--muted);font-size:16px}
 .prose p{max-width:var(--w7);color:var(--ink-2)}
 /* длинный текст + попутчик справа: на узком экране колонки складываются */
@@ -367,10 +365,10 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:19px;line-height:1.28;font-wei
   border:1px solid var(--accent-line);display:grid;place-items:center;margin-top:2px}
 .aside .tick::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent-ink)}
 .aside .tel{display:block;text-align:center;margin-top:11px;font-size:13px;color:var(--muted)}
-.chunk{border-top:1px solid var(--line);padding-top:24px;margin-top:26px;
-  display:grid;grid-template-columns:auto 1fr;gap:0 16px}
+.chunk{border-top:1px solid var(--line);padding-top:28px;margin-top:32px;
+  display:grid;grid-template-columns:auto 1fr;gap:0 18px}
 .chunk:first-of-type{border-top:0;padding-top:0;margin-top:0}
-.chunk .ibox{grid-row:span 2}
+.chunk .ibox{grid-row:span 2;align-self:start;margin-top:3px}
 /* иллюстрация внутри чанка: вторая колонка, чтобы не ломать сетку */
 .chunk-photo{grid-column:2;margin-top:16px}
 .chunk-photo img{width:100%;height:auto;border-radius:var(--radius);
@@ -391,19 +389,19 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:19px;line-height:1.28;font-wei
 .ogr-photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 18px 16px;
   font-size:13.5px;line-height:1.4;color:#fff;
   background:linear-gradient(180deg,rgba(20,16,12,0),rgba(20,16,12,.82))}
-.chunk h3{margin-bottom:7px;align-self:center}
+.chunk h3{margin-bottom:8px}
 @media (max-width:559px){.chunk{grid-template-columns:1fr}.chunk .ibox{grid-row:auto;margin-bottom:12px}}
 
 /* плитки ключевых цифр перед таблицей */
-.figures{display:grid;gap:12px;margin-bottom:var(--step);
-  grid-template-columns:repeat(auto-fit,minmax(158px,1fr))}
+.figures{display:grid;gap:24px 12px;margin-bottom:40px;padding-bottom:32px;
+  border-bottom:1px solid var(--line);grid-template-columns:repeat(2,minmax(0,1fr))}
 @media (min-width:900px){.figures{gap:var(--gutter);grid-template-columns:repeat(4,minmax(0,1fr))}}
-.figure{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
-  padding:16px;box-shadow:var(--shadow-sm);display:flex;gap:12px;align-items:flex-start}
-@media (min-width:700px){.figure{padding:20px;gap:16px}}
+.figure{display:flex;gap:12px;align-items:flex-start;padding:0 0 0 0}
+@media (min-width:900px){.figure{border-left:1px solid var(--line);padding-left:20px}
+  .figure:first-child{border-left:0;padding-left:0}}
 .figure .ic{width:24px;height:24px;color:var(--accent-ink);margin-top:2px}
-.figure .n{display:block;font-family:Manrope,Inter,sans-serif;font-size:22px;font-weight:800;
-  letter-spacing:-.02em;line-height:1.15}
+.figure .n{display:block;font-family:Manrope,Inter,sans-serif;font-size:28px;font-weight:800;
+  letter-spacing:-.03em;line-height:1.05}
 .figure .t{display:block;font-size:13px;color:var(--muted);margin-top:3px}
 
 /* заголовок карточки с иконкой */
@@ -411,16 +409,14 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:19px;line-height:1.28;font-wei
 .card-head h3{margin:0}
 
 /* этап: номер мелкой меткой, иконка — крупно */
-.step-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-/* пунктир между этапами — читается как последовательность, а не набор */
-@media (min-width:1000px){
-  /* соединитель привязан к самой карточке, иначе уезжает за контейнер */
-  #etapy .card{position:relative;overflow:visible}
-  #etapy .card:not(:last-child)::after{content:"";position:absolute;top:44px;left:100%;
-    width:18px;border-top:2px dashed var(--accent-line)}
-}
-.step-no{font-family:Manrope,sans-serif;font-weight:800;font-size:13px;color:var(--muted);
-  letter-spacing:.08em}
+.step-top{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
+#etapy .card{background:none;border:0;box-shadow:none;padding:0;
+  border-top:2px solid var(--accent-line);padding-top:20px}
+#etapy .card .ibox{display:none}
+/* соединитель убран: линия над каждым этапом группирует сама,
+   а пунктир между крупными цифрами читался случайными чёрточками */
+.step-no{font-family:Manrope,sans-serif;font-weight:800;font-size:40px;line-height:1;
+  color:var(--accent-ink);letter-spacing:-.04em}
 
 /* ── калькулятор ── */
 .calc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
@@ -527,17 +523,17 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
 .mother p{font-size:15px;color:var(--accent-deep);max-width:var(--w6)}
 
 /* ── Q&A ── */
-.qa{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);
-  overflow:hidden;box-shadow:var(--shadow-sm);transition:border-color .16s}
-.qa:hover{border-color:#dcd5cb}
-.qa[open]{border-color:var(--accent-line)}
-.qa+.qa{margin-top:var(--half)}
-.qa summary{list-style:none;cursor:pointer;padding:16px 20px;font-weight:600;font-size:15px;
-  display:flex;justify-content:space-between;gap:16px;align-items:center}
+.qa{border-top:1px solid var(--line)}
+.qa:last-of-type{border-bottom:1px solid var(--line)}
+.qa+.qa{margin-top:0}
+.qa summary{list-style:none;cursor:pointer;padding:22px 0;font-weight:700;font-size:17px;
+  display:flex;justify-content:space-between;gap:16px;align-items:center;
+  letter-spacing:-.01em;transition:color .16s}
+.qa summary:hover{color:var(--accent-ink)}
 .qa summary::-webkit-details-marker{display:none}
 .qa summary::after{content:"+";font-size:22px;color:var(--accent-ink);font-weight:400;line-height:1;flex:0 0 auto}
 .qa[open] summary::after{content:"−"}
-.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15px;max-width:var(--w7)}
+.qa .a{padding:0 0 22px;color:var(--ink-2);font-size:16px;max-width:var(--w7)}
 
 /* ── широкая полоса с фотографией: разбивает череду светлых секций ── */
 .band{position:relative;color:#fff;padding:56px 0;overflow:hidden;
@@ -700,9 +696,8 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
       </div>
     </aside>
   </div>
-</div>
 
-<div class="wrap jump-wrap">
+  <div class="wrap jump-wrap">
   <nav class="jump" aria-label="Разделы страницы">
     <a href="#raschet"><svg class="ic" aria-hidden="true"><use href="#i-kalkul"/></svg><span>Расчёт</span></a>
     <a href="#ustroystvo"><svg class="ic" aria-hidden="true"><use href="#i-sloi"/></svg><span>Устройство</span></a>
@@ -711,6 +706,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
     <a href="#raboty"><svg class="ic" aria-hidden="true"><use href="#i-foto"/></svg><span>Наши работы</span></a>
     <a href="#voprosy-konstrukciya"><svg class="ic" aria-hidden="true"><use href="#i-vopros"/></svg><span>Вопросы</span></a>
   </nav>
+</div>
 </div>
 
 <!-- 5. Встроенный калькулятор, предзаполненный под тип и основание -->
