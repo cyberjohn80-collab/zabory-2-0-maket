@@ -200,8 +200,11 @@ a:hover{color:var(--accent-ink-hover);text-decoration:underline}
    100vw считает ширину ОКНА вместе с вертикальной полосой прокрутки,
    поэтому даёт горизонтальный скролл там, где полоса занимает место.
    Ширину полосы меряет скрипт и кладёт в --sbw. */
-.bleed{width:var(--bleed);max-width:var(--bleed);
-  margin-left:calc(50% - var(--bleed) / 2)}
+/* Вынос за поля отменён. Полоса портфолио была шире контейнера
+   на 220 px с каждой стороны: заголовок стоял по контейнеру, а снимки
+   вылезали — левый край не совпадал ни с чем на странице. На этой
+   странице вынос ничего не даёт, а несовпадение краёв видно сразу. */
+.bleed{width:auto;max-width:none;margin-left:0}
 /* Сетка на 12 колонок. Ниже 900 px всё складывается в одну колонку —
    на узком экране колонки только мешают. */
 .g12{display:grid;gap:var(--step) var(--gutter);grid-template-columns:1fr}
@@ -266,9 +269,8 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
 .site-footer .logo-img{height:34px}
 .footer-logo{margin-bottom:14px}
 /* было 4:3 против 2,2 у крупного кадра — разнобой в одном ряду */
-.card-photo{width:100%;height:300px;aspect-ratio:auto;object-fit:cover}
+.card-photo{width:100%;height:240px;aspect-ratio:auto;object-fit:cover}
 /* карточка объекта: подпись прижата к низу, чтобы ряд читался одной линией */
-#raboty .cards{padding-inline:clamp(16px,4vw,64px)}
 #raboty .card{display:flex;flex-direction:column;position:relative;
   background:none;border-radius:0;padding:0;overflow:visible}
 #raboty .card-body{padding:20px 0 0}
