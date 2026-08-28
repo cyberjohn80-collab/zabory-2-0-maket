@@ -265,13 +265,14 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
 .logo-img{height:30px;width:auto}
 .site-footer .logo-img{height:34px}
 .footer-logo{margin-bottom:14px}
-.card-photo{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+/* было 4:3 против 2,2 у крупного кадра — разнобой в одном ряду */
+.card-photo{width:100%;height:300px;aspect-ratio:auto;object-fit:cover}
 /* карточка объекта: подпись прижата к низу, чтобы ряд читался одной линией */
 #raboty .cards{padding-inline:clamp(16px,4vw,64px)}
 #raboty .card{display:flex;flex-direction:column;position:relative;
   background:none;border-radius:0;padding:0;overflow:visible}
 #raboty .card-body{padding:20px 0 0}
-#raboty .photo-wrap{border-radius:var(--radius)}
+#raboty .photo-wrap{border-radius:var(--radius);overflow:hidden}
 /* первый объект — крупно, фото слева: ряд из четырёх мелких плиток
    выглядел как склад, а не как портфолио */
 @media (min-width:900px){
@@ -352,7 +353,7 @@ section{scroll-margin-top:calc(var(--header-h) + 16px)}   /* U-01 из ауди�
     radial-gradient(circle at 76% 30%, rgba(232,98,28,.22), transparent 26%),
     url('../../../img/evroshtaketnik-svai/hero-1800.webp')}
 }
-@media (min-width:900px){.hero{padding:var(--pad) 0 0;min-height:min(86svh,820px);
+@media (min-width:900px){.hero{padding:var(--pad) 0 0;min-height:min(80svh,760px);
   display:grid;align-content:space-between}}
 
 /* колонка сетки не должна распирать обёртку своим содержимым */
@@ -374,7 +375,14 @@ h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(38px,6vw,84px);line-heig
 .lead{font-size:20px;color:#d5cfc6;max-width:var(--w6);font-weight:400;line-height:1.5}
 /* вводный абзац: крупно и спокойно, как открывающее заявление.
    Имя .intro занято абзацем в форме — отсюда было 112 px дыр. */
-.opening{padding-block:calc(var(--pad) * .8)}
+/* Поле секции одно на всех — 232 px на пару. У блоков, где
+   содержимого на 150–300 px, это от трети до половины высоты.
+   Ужимаем там, где содержимого мало. */
+.opening{padding-block:calc(var(--pad) * .62)}
+#etapy{padding-block:calc(var(--pad) * .66)}
+#zayavka{padding-block:calc(var(--pad) * .72)}
+#voprosy{padding-block:calc(var(--pad) * .78)}
+.band{padding-block:calc(var(--pad) * .72)}
 .opening-text{font-size:clamp(19px,2.1vw,26px);line-height:1.45;color:var(--text);
   letter-spacing:-.012em;font-weight:400;max-width:none}
 /* Абзац стоял в потолке 920 px и занимал половину полосы — справа пустовало.
@@ -442,9 +450,24 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:20px;line-height:1.22;font-wei
 .section-head p{margin-top:13px;color:var(--muted);font-size:16px}
 .prose p{max-width:var(--w7);color:var(--ink-2)}
 /* длинный текст + попутчик справа: на узком экране колонки складываются */
-@media (min-width:900px){.prose-grid{align-items:start}
-  .prose-grid > .prose{grid-column:span 8}
-  .prose-grid > .aside{grid-column:span 4}}
+/* Врезка была узкой колонкой справа: текст 2458 px, врезка 562 —
+   1896 px правой колонки пустовало. Разворачиваем врезку в полосу
+   над доводами, доводы — в две колонки. Раздел вдвое короче. */
+@media (min-width:900px){
+  .prose-grid{align-items:start;grid-template-columns:1fr}
+  .prose-grid > .prose{grid-column:1}
+  .prose-grid > .aside{grid-column:1;order:-1;position:static;
+    display:grid;grid-template-columns:300px minmax(0,1fr) 250px;
+    gap:0 36px;align-items:center}
+  .aside h3{grid-column:1 / -1;margin-bottom:18px}
+  .aside .diag{grid-column:1;grid-row:2;margin-bottom:0}
+  .aside ul{grid-column:2;grid-row:2;margin:0}
+  .aside .btn{grid-column:3;grid-row:2;align-self:center}
+  .aside .tel{grid-column:3;grid-row:3;margin-top:10px}
+  .prose{columns:2;column-gap:48px}
+  .chunk{break-inside:avoid}
+  .chunk:first-of-type{margin-top:0}
+}
 .aside{background:var(--bg);border:0;border-radius:var(--radius-lg);padding:28px}
 @media (min-width:900px){.aside{position:sticky;top:96px}}
 @media (min-width:960px){.aside{position:sticky;top:calc(var(--header-h) + 20px)}}
@@ -468,9 +491,10 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:20px;line-height:1.22;font-wei
 
 /* диптих под таблицей: материал и контроль материала */
 .diptih{margin-top:var(--step);gap:var(--gutter)}
-@media (min-width:900px){.diptih > figure{grid-column:span 7}}
+/* фигура осталась одна — пусть занимает полосу, а не половину */
+@media (min-width:900px){.diptih > figure{grid-column:1 / -1}}
 .diptih figure{margin:0}
-.diptih img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;
+.diptih img{width:100%;height:auto;aspect-ratio:32/9;object-fit:cover;
   border-radius:var(--radius);display:block}
 .diptih figcaption{margin-top:10px;font-size:13px;color:var(--muted);
   display:flex;gap:10px;align-items:baseline}
@@ -516,6 +540,8 @@ h3{font-family:Manrope,Inter,sans-serif;font-size:20px;line-height:1.22;font-wei
 /* этап: номер мелкой меткой, иконка — крупно */
 .step-top{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
 #etapy .card{background:none;border:0;box-shadow:none;padding:0;
+  border-radius:0;                    /* иначе линия сверху скругляется
+                                         и читается как незамкнутая скобка */
   border-top:2px solid var(--accent-line);padding-top:20px}
 #etapy .card .ibox{display:none}
 /* соединитель убран: линия над каждым этапом группирует сама,
@@ -650,7 +676,7 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
   background-image:
     linear-gradient(100deg, rgba(16,13,11,.94) 0%, rgba(16,13,11,.86) 46%, rgba(16,13,11,.5) 100%),
     var(--band-img)}
-@media (min-width:900px){.band{padding:var(--pad) 0;min-height:min(72vh,760px);display:grid;align-items:center}}
+@media (min-width:900px){.band{padding:var(--pad) 0;min-height:min(52vh,500px);display:grid;align-items:center}}
 .band-inner{max-width:var(--w7)}
 .band h2{font-size:clamp(25px,3.4vw,36px);margin-bottom:14px}
 .band p{color:#cfc9c1;font-size:16px;max-width:var(--w6)}
@@ -676,10 +702,11 @@ tbody tr:first-child th,tbody tr:first-child td{border-top:0}
   border-radius:var(--radius-lg);padding:16px;display:flex;flex-direction:column}
 .rev .src{display:block;font-size:12px;color:var(--muted);font-weight:800;
   letter-spacing:.08em;text-transform:uppercase;margin-bottom:11px}
-/* Общая высота с обрезкой резала текст по бокам: скриншоты разных
-   площадок к одной пропорции не приводятся. Ровняем карточки, а не
-   снимки — карточка одного цвета, и разница уходит в её поле. */
-.rev-shot{width:100%;height:auto;border:1px solid var(--line);border-radius:8px}
+/* Жёсткая высота резала широкие снимки по бокам. Потолок высоты
+   этого не делает: широкие остаются как есть, у высокого обрезается
+   только низ. Ступень между соседями падает с 272 px до полусотни. */
+.rev-shot{width:100%;height:auto;max-height:360px;object-fit:cover;
+  object-position:top center;border:1px solid var(--line);border-radius:8px}
 
 /* вопросы одним блоком в две колонки по темам */
 .qa-cols{display:grid;gap:40px}
