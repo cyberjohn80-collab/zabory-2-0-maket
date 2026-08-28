@@ -375,14 +375,14 @@ h1{font-family:Manrope,Inter,sans-serif;font-size:clamp(38px,6vw,84px);line-heig
 /* вводный абзац: крупно и спокойно, как открывающее заявление.
    Имя .intro занято абзацем в форме — отсюда было 112 px дыр. */
 .opening{padding-block:calc(var(--pad) * .8)}
-/* На широком экране одна колонка в 68 знаков занимает половину полосы,
-   а вторая половина пустует. Разбиваем на две — ширина занята,
-   а строка остаётся удобной. */
-@media (min-width:1100px){
-  .opening-text{columns:2;column-gap:56px;max-width:none}
-}
 .opening-text{font-size:clamp(19px,2.1vw,26px);line-height:1.45;color:var(--text);
-  max-width:20ch;max-width:920px;letter-spacing:-.012em;font-weight:400}
+  letter-spacing:-.012em;font-weight:400;max-width:none}
+/* Абзац стоял в потолке 920 px и занимал половину полосы — справа пустовало.
+   Теперь он занимает всю полосу, а удобную длину строки держит ширина
+   колонки: браузер сам ставит две или три, смотря по месту. */
+@media (min-width:1000px){
+  .opening-text{columns:2;column-gap:56px}
+}
 .lead-more{margin-top:var(--half);font-size:15px;color:#a8a199;max-width:var(--w6);line-height:1.55}
 .hero-facts{list-style:none;margin-top:40px;display:grid;gap:14px}
 .hero-facts li{display:flex;gap:12px;align-items:center;font-size:15px;color:#cfc9c1}
